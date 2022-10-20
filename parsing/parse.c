@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/20 02:29:45 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/20 23:38:13 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_token	*parsing(t_token *tokens)
 				fill_sequences(ft_strlen(tokens->value), sequences);
 			}
 			tokens->value = remove_quotes(ft_strdup(tokens->value), sequences);
+			if(tokens->value == NULL)
+				return(NULL);
 		}
 		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT || tokens->e_type == LESS ) && tokens->next && tokens->next->value[0] == '$')
 		{
@@ -45,6 +47,8 @@ t_token	*parsing(t_token *tokens)
 			tokens = tokens->next;
 			fill_sequences(ft_strlen(tokens->value), sequences);
 			tokens->value = remove_quotes(tokens->value, sequences);
+			if(tokens->value == NULL)
+				return(NULL);
 		}
 		tokens = tokens->next;
 	}
@@ -279,7 +283,6 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 			else
 				tmp->argv = realloc_array(tmp->argv, tokens->value);
 			tokens = tokens->next;
-
 		}
 		else if (tokens->e_type == GREAT || tokens->e_type == LESS
 			|| tokens->e_type == LESSANDLESS || tokens->e_type == GREATANDGREAT)
@@ -308,7 +311,6 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 			tmp = tmp->next;
 			tokens = tokens->next;
 		}
-
 	}
 }
 

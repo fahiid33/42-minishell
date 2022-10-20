@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:09:30 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/19 00:46:47 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/21 00:29:01 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ t_token	*lst_add_back(t_token *lst, t_token *new)
 t_token	*init_create_tokens(t_token *tokens, char *line)
 {
 	t_lex	*lex;
+
 	lex = f_malloc(sizeof(t_lex));
 	tokens = init_token(NULL, 0);
-    if (!lex || !tokens)
-        return (NULL);
+	if (!lex || !tokens)
+		return (NULL);
 	lex->c = line[0];
 	lex->cmd = line;
 	lex->i = 0;
@@ -54,9 +55,9 @@ t_token	*init_token(char *val, int type)
 
 t_token	*create_tokens(t_lex *lex, t_token *tokens)
 {
-	while(lex->c)
+	while (lex->c)
 	{
-		if(lex->c == 32 || lex-> c == 9)
+		if (lex->c == 32 || lex-> c == 9)
 			advance_lex(lex);
 		else if (lex->c == '|')
 			token_pipe(lex, tokens);
@@ -68,13 +69,13 @@ t_token	*create_tokens(t_lex *lex, t_token *tokens)
 			token_word(lex, tokens);
 	}
 	end_token(tokens);
-	return(tokens);
+	return (tokens);
 }
 
 void	token_pipe(t_lex *lex, t_token *tokens)
 {
-	char *val;
-	t_token *new;
+	char	*val;
+	t_token	*new;
 
 	val = ft_strdup("|");
 	new = NULL;
@@ -85,13 +86,13 @@ void	token_pipe(t_lex *lex, t_token *tokens)
 
 void	token_great(t_lex *lex, t_token *tokens)
 {
-	char *val;
-	t_token *new;
+	char	*val;
+	t_token	*new;
 
 	val = ft_strdup("");
 	new = NULL;
 	advance_lex(lex);
-	if	(lex->cmd[lex->i] == '>')
+	if (lex->cmd[lex->i] == '>')
 	{
 		advance_lex(lex);
 		val = ft_strdup(">>");
@@ -107,13 +108,13 @@ void	token_great(t_lex *lex, t_token *tokens)
 
 void	token_less(t_lex *lex, t_token *tokens)
 {
-	char *val;
-	t_token *new;
+	char	*val;
+	t_token	*new;
 
 	val = ft_strdup("");
 	new = NULL;
 	advance_lex(lex);
-	if	(lex->cmd[lex->i] == '<')
+	if (lex->cmd[lex->i] == '<')
 	{
 		advance_lex(lex);
 		val = ft_strdup("<<");
@@ -129,65 +130,26 @@ void	token_less(t_lex *lex, t_token *tokens)
 
 void	token_word(t_lex *lex, t_token *tokens)
 {
-	char *val;
-	t_token *new;
-	int i = 0;
-	int j = 0;
-	int k = 1;
+	char	*val;
+	t_token	*new;
+	int		i;
+	int		j;
+	int		k;
 
 	val = ft_strdup("");
 	new = NULL;
-	while(lex->c != '\0' && k == 1)
+	i = 0;
+	j = 0;
+	k = 1;
+	while (lex->c != '\0' && k == 1)
 	{
 		k = 0;
-		while (lex->c && !is_token(lex->c) && lex->c != '\0')
-		{
-			if(lex->c == 34)
-				switch_var(&i);
-			else if(lex->c == '\'')
-				switch_var(&j);
-			val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-			advance_lex(lex);
-			if(i == 1 || j == 1)
-				break;
-		}
-		if(i == 1)
-		{
-			while(lex->c != 34 && lex->c != '\0')
-			{
-				val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-				advance_lex(lex);
-			}
-			val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-			advance_lex(lex);
-			switch_var(&i);
-		}
-		else if(j == 1)
-		{
-			while(lex->c && lex->c != '\'' && lex->c != '\0')
-			{
-				val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-				advance_lex(lex);
-			}
-			val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-			advance_lex(lex);
-			switch_var(&j);
-		}
-		while(lex->c && lex->c != '>' && lex->c != '<' && lex->c != '|'
-			&& lex->c != ' ' && lex->c != '\0')
-		{
-			if(lex->c == 34)
-				switch_var(&i);
-			else if(lex->c == '\'')
-				switch_var(&j);
-			val = ft_strjoin(val, ft_strndup(&lex->c, 1));
-			advance_lex(lex);
-			if(i == 1 || j == 1)
-			{
-				k=1;
-				break;
-			}	
-		}
+		collect_to_token(&i, &j, &lex, &val);
+		if (i == 1)
+			continue_to_dquote(&i, &lex, &val);
+		else if (j == 1)
+			continue_to_squote(&j, &lex, &val);
+		k = collect_to_token_repeat(&i, &j, &lex, &val);
 	}
 	new = init_token(val, WORD);
 	tokens = lst_add_back(tokens, new);
@@ -195,7 +157,7 @@ void	token_word(t_lex *lex, t_token *tokens)
 
 void	end_token(t_token *tokens)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = NULL;
 	new = init_token("", END);

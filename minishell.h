@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/20 03:37:29 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/21 00:20:11 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,15 @@ typedef struct s_minishell
 t_minishell	g_vars;
 
 // parse
+void    collect_to_token(int *i, int *j, t_lex **lex, char **val);
+void 	continue_to_dquote(int *i, t_lex **lex, char **val);
+void    continue_to_squote(int *j, t_lex **lex, char **val);
+int    collect_to_token_repeat(int *i, int *j, t_lex **lex, char **val);
 void print_int_tab(int *tab);
 void 	switch_var(int *i);
 int		ft_is_space(void);
 char 	*dq_content(char *value);
-void	fill_tparse(t_token *tokens, t_parse **parse);
+void		fill_tparse(t_token *tokens, t_parse **parse);
 t_parse	*init_cmd(void);
 t_parse	*add_command(t_parse *commad);
 t_parse	*add_command_back(t_parse *lst, t_parse *new);
