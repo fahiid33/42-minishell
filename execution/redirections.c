@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 02:29:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/20 03:38:59 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ int	append_trunc(t_redir *redir)
 	fout = 1;
 	if (redir->e_type == GREAT)
 	{
+		if (redir->file[0] == '*' || redir->file[0] == '\0')
+		{
+				if (redir->file[0] == '\0')
+					file_error("", 1);
+				else
+					errors(4);
+				return (2);
+		}
 		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		fout = redir->fdout;
 	}
@@ -61,7 +69,7 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 	{	
 		if (access(redir->file, F_OK) == -1)
 		{
-			file_error(redir->file);
+			file_error(redir->file, 0);
 			g_vars.exit_status = 1;
 			if (exec)
 				return (-1);
@@ -69,6 +77,14 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 		}
 		else
 		{
+			if (redir->file[0] == '*' || redir->file[0] == '\0')
+			{
+				if (redir->file[0] == '\0')
+					file_error("", 1);
+				else
+					errors(4);
+				return (2);
+			}
 			redir->fdin = open(redir->file, O_RDONLY);
 			fin = redir->fdin;
 		}
@@ -93,11 +109,17 @@ void	open_redir(t_parse *head, int exe)
 	while (tmp != NULL)
 	{
 		if (tmp->e_type == GREAT || tmp->e_type == GREATANDGREAT)
+		{
 			fout = append_trunc(tmp);
+			if (fout == 2)
+				break ;
+		}
 		else if (tmp->e_type == LESS || tmp->e_type == LESSANDLESS)
 		{
 			fin = open_read(tmp, head, exe);
 			if (fin == -1)
+				break ;
+			if (fin == 2)
 				break ;
 		}
 		tmp = tmp->next;

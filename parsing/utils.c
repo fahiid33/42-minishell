@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:06:43 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/18 04:20:24 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/20 02:36:27 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,13 @@ void	errors(int exit_status)
 		ft_putchar_fd('\n', 2);
 		g_vars.g_err = 1;
 		g_vars.exit_status = 2;
+	}
+	else if (exit_status == 4)
+	{
+		ft_putstr_fd("minishell : ambiguous redirect", 2);
+		ft_putchar_fd('\n', 2);
+		g_vars.g_err = 1;
+		g_vars.exit_status = 1;
 	}
 }
 

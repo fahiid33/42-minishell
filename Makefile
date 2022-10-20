@@ -41,4 +41,3 @@ fclean : clean
 	@echo "🗑️ 🗑️ 🗑️"
 
 re : fclean all
-	@rm -r *.dSYM

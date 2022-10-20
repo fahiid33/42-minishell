@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 02:29:19 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/19 00:31:07 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/20 01:07:46 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	open_heredoc(char *limiter, char *filename)
 		}
 		seq = f_malloc(sizeof(int) * ft_strlen(doc));
 		fill_sequences(ft_strlen(doc), seq);
-		doc = expand_dollar(doc, seq);
+		doc = expand_dollar(doc, seq, 1);
 		ft_putstr_fd(doc, fd);
 		ft_putchar_fd('\n', fd);
 		if (doc)

@@ -16,11 +16,16 @@ void	exec_child(t_parse *head, t_env **env)
 {
 	if (head->cmd && builtins_cases(head))
 	{
-		g_vars.exit_status = exec_builtins(head, env);
+		if (!g_vars.g_err)
+			g_vars.exit_status = exec_builtins(head, env);
 		exit (g_vars.exit_status);
 	}
 	else
-		execute(head, env);
+	{
+		if (!g_vars.g_err)
+			execute(head, env);
+		exit(g_vars.exit_status);
+	}
 }
 
 void	__child(t_parse *cmd, t_env **env)
@@ -57,7 +62,8 @@ void	exec_simple_cmd(t_parse *cmd, t_env **env)
 	fds[0] = dup(0);
 	fds[1] = dup(1);
 	open_redir(cmd, 0);
-	g_vars.exit_status = exec_builtins(cmd, env);
+	if (!g_vars.g_err)
+		g_vars.exit_status = exec_builtins(cmd, env);
 	dup2(fds[0], 0);
 	dup2(fds[1], 1);
 }

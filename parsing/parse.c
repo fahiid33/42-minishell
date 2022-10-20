@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/19 23:08:03 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/20 02:29:45 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*parsing(t_token *tokens)
 		{
 			if(there_is_dollar(tokens->value))
 			{
-				tokens->value = expand_dollar(tokens->value, sequences);
+				tokens->value = expand_dollar(tokens->value, sequences, 0);
 				if(tokens->value == NULL)
 					return(NULL);
 			}
@@ -35,7 +35,12 @@ t_token	*parsing(t_token *tokens)
 			}
 			tokens->value = remove_quotes(ft_strdup(tokens->value), sequences);
 		}
-		else if(tokens->e_type == LESSANDLESS)
+		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT || tokens->e_type == LESS ) && tokens->next && tokens->next->value[0] == '$')
+		{
+			tokens = tokens->next;
+			tokens->value = ft_strdup("*");
+		}
+		else if(tokens->e_type == LESSANDLESS && tokens->next->e_type == WORD)
 		{
 			tokens = tokens->next;
 			fill_sequences(ft_strlen(tokens->value), sequences);
@@ -61,7 +66,7 @@ int		there_is_dollar(char *str)
 	return (0);
 }
 
-char	*expand_dollar(char *value, int *sequences)
+char	*expand_dollar(char *value, int *sequences, int f)
 {
 	int i = 0;
 	int o = 0;
@@ -71,6 +76,7 @@ char	*expand_dollar(char *value, int *sequences)
 	char *dq = ft_strdup("");
 	while(value[i] != '\0')
 	{
+		expnd = ft_strdup("");
 		if(value[i] == '$')
 		{
 			i++;
@@ -83,11 +89,12 @@ char	*expand_dollar(char *value, int *sequences)
 					continue ;
 				}
 				i++;
-				while(value[i] && !is_token(value[i]))
+				while(value[i] && !is_token(value[i]) && value[i] != '$')
 				{
 					result = ft_strjoin(result, ft_strndup(&value[i], 1));
 					i++;
 				}
+				i--;
 			}
 			else if(value[i] == '\0')
 			{
@@ -97,9 +104,15 @@ char	*expand_dollar(char *value, int *sequences)
 			}
 			else if(value[i] == '$')
 			{
-				result = ft_strjoin(result, "$$");
-				sequences[o++] = 1;
-				sequences[o++] = 1;
+				result = ft_strjoin(result, ft_itoa(g_vars.pid));
+				j = 0;
+				while(j < ft_strlen(dq_content(dq)))
+				{
+					sequences[o] = 1;
+					o++;
+					j++;
+				}
+
 			}
 			else if(value[i] == '?')
 				result = ft_strjoin(result, ft_itoa(g_vars.exit_status));
@@ -130,7 +143,7 @@ char	*expand_dollar(char *value, int *sequences)
 		{
 			dq = ft_strdup("");
 			i++;
-			if(value[i] == '\0')
+			if((value[i] == '\0' || ft_int_strchr(&value[i], 34 ) == -1 ) && !f)
 			{
 				errors(2);
 				return(NULL);
@@ -152,14 +165,13 @@ char	*expand_dollar(char *value, int *sequences)
 				o++;
 				j++;
 			}
-			j = 0;
 			result = ft_strjoin(result, dq_content(dq));
 		}
 		else if(value[i] && value[i] == 39)
 		{
 			result = ft_strjoin(result, ft_strndup(&value[i], 1));
 			i++;
-			if(ft_int_strchr(&value[i], 39) == -1)
+			if(ft_int_strchr(&value[i], 39) == -1 && !f)
 			{
 				errors(2);
 				return(NULL);
@@ -186,6 +198,8 @@ char	*expand_dollar(char *value, int *sequences)
 			sequences[o] = 1;
 			o++;
 		}
+		if (!value[i])
+			break ;
 		i++;
 	}
 	return(result);
@@ -209,7 +223,7 @@ char	*remove_quotes(char *value, int *sequences)
 					if(ft_int_strchr(&value[i], q) == -1 && g_vars.g_err != 1)
 					{
 						errors(2);
-						break ;
+						return (NULL) ;
 					}
 				}
 				if (g_vars.g_err != 1)
@@ -255,6 +269,7 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 	t_parse *tmp;
 
 	tmp = *parse;
+	
 	while(tokens)
 	{
 		if(tokens->e_type == WORD)
@@ -264,12 +279,16 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 			else
 				tmp->argv = realloc_array(tmp->argv, tokens->value);
 			tokens = tokens->next;
+
 		}
 		else if (tokens->e_type == GREAT || tokens->e_type == LESS
 			|| tokens->e_type == LESSANDLESS || tokens->e_type == GREATANDGREAT)
 		{
-				if(tokens->next && tokens->next->e_type != WORD)
+				if(tokens->next->e_type != WORD)
+				{
 					errors(258);
+					return ;
+				}
 				type = tokens->e_type;
 				tokens = tokens->next;
 				if(!tmp->redir)
@@ -278,7 +297,7 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 					tmp->redir = add_redir(tmp->redir, tokens->value, type);
 				tokens = tokens->next;
 		}
-		if(tokens->e_type == PIPE || tokens->e_type == END)
+		else if(tokens->e_type == PIPE || tokens->e_type == END)
 		{
 			if(tokens->next && tokens->e_type == PIPE && tokens->next->e_type == END)
 			{
@@ -289,6 +308,7 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 			tmp = tmp->next;
 			tokens = tokens->next;
 		}
+
 	}
 }
 
@@ -301,21 +321,26 @@ char *dq_content(char *value)
 	while(value[i])
 	{
 		expnd = ft_strdup("");
-		if(value[i] == '$' && value[i + 1] && (is_alphanum(value[i + 1]) || value[i + 1] == '?'))
+		if(value[i] == '$' && value[i + 1] && (is_alphanum(value[i + 1]) || value[i + 1] == '?' || value[i + 1] == '$'))
 		{
 			i++;
 			if(is_digit(value[i]))
 			{
+				if (value[i] == '0')
+				{
+					result = ft_strjoin(result, my_getenv(g_vars.my_env, "0"));	
+				}
 				i++;
-				while(value[i] && !is_token(value[i]))
+				while(value[i] && !is_token(value[i]) && value[i] != '$')
 				{
 					result = ft_strjoin(result, ft_strndup(&value[i], 1));
 					i++;
 				}
+					i--;
 			}
 			else if(value[i] == '$')
 			{
-				result = ft_strjoin(result, "$$");
+				result = ft_strjoin(result, ft_itoa(g_vars.pid));
 			}
 			else if(value[i] == '?')
 				result = ft_strjoin(result, ft_itoa(g_vars.exit_status));

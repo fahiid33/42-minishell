@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/19 05:16:22 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/20 03:37:29 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_redir	*add_redir(t_redir *redir, char *val, int type);
 void	advance_lex(t_lex *lex);
 t_token	*parsing(t_token *tokens);
 int		there_is_dollar(char *str);
-char	*expand_dollar(char *value, int *sequences);
+char	*expand_dollar(char *value, int *sequences, int f);
 char	*remove_quotes(char *value, int *sequences);
 void	fill_sequences(int len, int *sequences);
 t_token	*lst_add_back(t_token *lst, t_token *new);
@@ -147,7 +147,7 @@ char	**ft_split(char const *s, char c);
 
 void	free_unused(int frr, char *s1, char *s2);
 void	dup_files(int exe, int fin, int fout);
-void	file_error(char *filename);
+void	file_error(char *filename, int am);
 char	*ft_strjoino(char *s1, char *s2, int frr);
 void	join_string2(char *str, char *s2, int j);
 t_env	*lst_new(char *key, char sep, char *val);
