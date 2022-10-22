@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 05:21:06 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 05:49:34 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,4 +142,31 @@ int	get_exit_status(char **result)
 	*result = ft_strjoin(*result, ft_itoa(g_vars.exit_status));
 	return (len);
 }
+//
+int	parse_word(t_token **tokens, int **sequences)
+{
+	if (there_is_dollar((*tokens)->value))
+	{
+		(*tokens)->value = expand_dollar((*tokens)->value, *sequences, 0);
+		if ((*tokens)->value == NULL)
+			return (1);
+	}
+	else
+	{
+		fill_sequences(ft_strlen((*tokens)->value), *sequences);
+	}
+	(*tokens)->value = remove_quotes(ft_strdup((*tokens)->value), *sequences);
+	if ((*tokens)->value == NULL)
+		return (1);
+	return(0);
+}
 
+int	parse_delimiter(t_token **tokens, int **sequences)
+{
+	*tokens = (*tokens)->next;
+	fill_sequences(ft_strlen((*tokens)->value), *sequences);
+	(*tokens)->value = remove_quotes((*tokens)->value, *sequences);
+	if ((*tokens)->value == NULL)
+		return (1);
+	return (0);
+}

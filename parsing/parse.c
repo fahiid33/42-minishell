@@ -6,38 +6,32 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 05:22:42 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 05:52:23 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+void print_tokens(t_token *tokens)
+{
+	while (tokens)
+	{
+		printf("token: %s, type: %d\n", tokens->value, tokens->e_type);
+		tokens = tokens->next;
+	}
+}
 t_token	*parsing(t_token *tokens)
 {
 	int		*sequences;
 	t_token	*tmp;
-	char	*exd;
 
 	tmp = tokens->next;
 	tokens = tokens->next;
 	sequences = f_malloc(sizeof(int) * 10000);
-	exd = ft_strdup("");
 	while (tokens->e_type != END)
 	{
 		if (tokens->e_type == WORD)
 		{
-			if (there_is_dollar(tokens->value))
-			{
-				tokens->value = expand_dollar(tokens->value, sequences, 0);
-				if (tokens->value == NULL)
-					return (NULL);
-			}
-			else
-			{
-				fill_sequences(ft_strlen(tokens->value), sequences);
-			}
-			tokens->value = remove_quotes(ft_strdup(tokens->value), sequences);
-			if (tokens->value == NULL)
+			if(parse_word(&tokens, &sequences))
 				return (NULL);
 		}
 		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT
@@ -49,15 +43,11 @@ t_token	*parsing(t_token *tokens)
 		}
 		else if (tokens->e_type == LESSANDLESS && tokens->next->e_type == WORD)
 		{
-			tokens = tokens->next;
-			fill_sequences(ft_strlen(tokens->value), sequences);
-			tokens->value = remove_quotes(tokens->value, sequences);
-			if (tokens->value == NULL)
+			if(parse_delimiter(&tokens, &sequences))
 				return (NULL);
 		}
 		tokens = tokens->next;
 	}
-	free(sequences);
 	return (tmp);
 }
 
