@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:06:43 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/20 02:36:27 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/21 00:55:34 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void switch_var(int *i)
+void	switch_var(int *i)
 {
-	if(*i == 0)
+	if (*i == 0)
 		*i = 1;
 	else
 		*i = 0;
@@ -99,9 +99,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int is_digit(char c)
+int	is_digit(char c)
 {
-	if(c >= '0' && c <= '9')
+	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
@@ -122,7 +122,7 @@ int	is_token(char c)
 	return (0);
 }
 
-char *ft_strndup(char *str, int i)
+char	*ft_strndup(char *str, int i)
 {
 	char	*dup;
 	int		j;
@@ -174,6 +174,7 @@ char	*negative(int *n, char *str, int count)
 	str[0] = '-';
 	return (str);
 }
+
 char	*ft_itoa(int n)
 {
 	char	*str;
@@ -206,23 +207,24 @@ char	*ft_itoa(int n)
 
 int	is_alpha(char c)
 {
-	if((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
 }
 
 int	is_alphanum(char c)
 {
-	if(is_alpha(c) || is_digit(c))
+	if (is_alpha(c) || is_digit(c))
 		return (1);
 	return (0);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i = 0;
+	int	i;
 
-	while(str[i] != '\0')
+	i = 0;
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
@@ -249,14 +251,14 @@ int	ft_int_strchr(const char *s, int c)
 
 void	errors(int exit_status)
 {
-	if(exit_status == 2)
+	if (exit_status == 2)
 	{
 		ft_putstr_fd("Minishell : unclosed quote!", 2);
 		ft_putchar_fd('\n', 2);
 		g_vars.g_err = 1;
 		g_vars.exit_status = 2;
 	}
-	else if(exit_status == 258)
+	else if (exit_status == 258)
 	{
 		ft_putstr_fd("Minishell : syntax error near unexpected token", 2);
 		ft_putchar_fd('\n', 2);
@@ -286,7 +288,7 @@ void	ft_putchar_fd(char c, int fd)
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s)
