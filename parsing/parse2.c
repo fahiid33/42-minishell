@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 03:34:35 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 04:50:02 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,35 @@ int	collect_squote(char *value, char **result, int *i, int f)
 		*result = ft_strjoin(*result, ft_strndup(&value[*i], 1));
 		len++;
 	}
+	return (len);
+}
+
+int	collect_char(char *value, char **result, int i)
+{
+	*result = ft_strjoin(*result, ft_strndup(&value[i], 1));
+	return(1);
+}
+
+int	expand_dd(char **result)
+{
+	int len;
+
+	len = ft_strlen(ft_itoa(g_vars.pid));
+	*result = ft_strjoin(*result, ft_itoa(g_vars.pid));
+	return (len);
+}
+
+int	collect_dollar(char **result)
+{
+	*result = ft_strjoin(*result, ft_strdup("$"));
+	return(1);
+}
+
+int	get_exit_status(char **result)
+{
+	int len;
+
+	len = ft_strlen(ft_itoa(g_vars.exit_status));
+	*result = ft_strjoin(*result, ft_itoa(g_vars.exit_status));
 	return (len);
 }

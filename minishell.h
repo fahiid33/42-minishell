@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/22 02:29:54 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 04:50:48 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,20 @@ typedef struct s_minishell
 t_minishell	g_vars;
 
 // parse
-int	collect_squote(char *value, char **result, int *i, int f);
+int	get_exit_status(char **result);
+int	collect_char(char *value, char **result, int i);
+int	expand_dd(char **result);
+int	collect_dollar(char **result);
+int		collect_squote(char *value, char **result, int *i, int f);
 int    expand_in_dq(char *value, char **result, int *i, int f);
 void    fill_sequences_adv(int *sequences, int *o, int len, int x);
 void    simple_expand(char *value, char **result, int *i);
 int		expand_digit(char *value, char **result, int *i);
-void    dollar_only(char **result, int *sequences, int *o);
 void    collect_to_token(int *i, int *j, t_lex **lex, char **val);
 void 	continue_to_dquote(int *i, t_lex **lex, char **val);
 void    continue_to_squote(int *j, t_lex **lex, char **val);
 int    collect_to_token_repeat(int *i, int *j, t_lex **lex, char **val);
-void print_int_tab(int *tab);
+void 	print_int_tab(int *tab);
 void 	switch_var(int *i);
 int		ft_is_space(void);
 char 	*dq_content(char *value);

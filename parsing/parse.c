@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 03:55:31 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 04:53:28 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,42 +92,35 @@ char	*expand_dollar(char *value, int *sequences, int f)
 	int		o;
 	int		j;
 	char	*result;
-	char	*dq;
 
 	i = 0;
 	j = 0;
 	o = 0;
 	result = ft_strdup("");
-	dq = ft_strdup("");
 	while (value[i] != '\0')
 	{
 		if (value[i] == '$')
 		{
 			i++;
-			if (is_digit(value[i]))
+			if (value[i] == '\0')
+			{
+				fill_sequences_adv(sequences, &o, collect_dollar(&result), 1);
+				break;
+			}
+			else if (is_digit(value[i]))
 			{
 				if (expand_digit(&value[i], &result, &i))
 					continue ;
 			}
-			else if (value[i] == '\0')
-			{
-				result = ft_strjoin(result, "$");
-				fill_sequences_adv(sequences, &o, 1, 1);
-				break;
-			}
 			else if (value[i] == '$')
-			{
-				result = ft_strjoin(result, ft_itoa(g_vars.pid));
-				fill_sequences_adv(sequences, &o, ft_strlen(ft_itoa(g_vars.pid)), 1);
-			}
+				fill_sequences_adv(sequences, &o, expand_dd(&result), 1);
 			else if (value[i] == '?')
-				result = ft_strjoin(result, ft_itoa(g_vars.exit_status));
+				fill_sequences_adv(sequences, &o, get_exit_status(&result), 1);
 			else if ((value[i] == 39 || value[i] == 34))
 				continue ;
 			else if ((value[i] && !is_alpha(value[i]) && !is_digit(value[i])))
 			{
-				result = ft_strjoin(result, "$");
-				fill_sequences_adv(sequences, &o, 1, 1);
+				fill_sequences_adv(sequences, &o, collect_dollar(&result), 1);
 				continue ;
 			}
 			else
@@ -146,20 +139,16 @@ char	*expand_dollar(char *value, int *sequences, int f)
 		}
 		else if (value[i] && value[i] == 39)
 		{
+			if(collect_squote(value, &result, &i, f) == -1)
+				return(NULL);
 			fill_sequences_adv(sequences, &o, collect_squote(value, &result, &i, f), 2);
-			print_int_tab(sequences);
 		}
 		else
-		{
-			result = ft_strjoin(result, ft_strndup(&value[i], 1));
-			sequences[o] = 1;
-			o++;
-		}
+			fill_sequences_adv(sequences, &o, collect_char(value, &result, i), 1);
 		if (!value[i])
 			break ;
 		i++;
 	}
-
 	return (result);
 }
 
