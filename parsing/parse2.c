@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 04:50:02 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 05:21:06 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,27 @@ int expand_digit(char *value, char **result, int *i)
 	return (0);
 }
 
-void    simple_expand(char *value, char **result, int *i)
+int    simple_expand(char *value, char **result, int *i)
 {
-    char *to_expand;
+    char 	*to_expand;
+	int		len;
 
     to_expand = ft_strdup("");
+	len = 0;
     while (is_alphanum(value[*i]))
     {
         to_expand = ft_strjoin(to_expand, ft_strndup(&value[*i], 1));
         (*i)++;
     }
     if (my_getenv(g_vars.my_env, to_expand))
+	{
         *result = ft_strjoin(*result, my_getenv(g_vars.my_env, to_expand));
+		len = ft_strlen(my_getenv(g_vars.my_env, to_expand));
+	}
     else
         *result = ft_strjoin(*result, ft_strdup(""));
     (*i)--;
+	return (len);
 }
 
 int    expand_in_dq(char *value, char **result, int *i, int f)
@@ -136,3 +142,4 @@ int	get_exit_status(char **result)
 	*result = ft_strjoin(*result, ft_itoa(g_vars.exit_status));
 	return (len);
 }
+

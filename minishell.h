@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/22 04:50:48 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/22 05:11:22 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	collect_dollar(char **result);
 int		collect_squote(char *value, char **result, int *i, int f);
 int    expand_in_dq(char *value, char **result, int *i, int f);
 void    fill_sequences_adv(int *sequences, int *o, int len, int x);
-void    simple_expand(char *value, char **result, int *i);
+int    simple_expand(char *value, char **result, int *i);
 int		expand_digit(char *value, char **result, int *i);
 void    collect_to_token(int *i, int *j, t_lex **lex, char **val);
 void 	continue_to_dquote(int *i, t_lex **lex, char **val);
