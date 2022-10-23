@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 05:49:34 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 02:05:01 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    fill_sequences_adv(int *sequences, int *o, int len, int x)
 
 int expand_digit(char *value, char **result, int *i)
 {
-	if (value[*i] == '0')
+	if (value[*i] && value[*i] == '0')
 	{
 		*result = ft_strjoin(*result, my_getenv(g_vars.my_env, "0"));
 		(*i)++;
@@ -67,7 +67,7 @@ int    expand_in_dq(char *value, char **result, int *i, int f)
     char    *dq;
 
     dq = ft_strdup("");
-	if((value[*i] == '\0' || ft_int_strchr(&value[*i], 34 ) == -1) && !f)
+	if((value[*i] == '\0' || ft_int_strchr(&value[*i], 34) == -1) && !f)
 	{
 		errors(2);
 		return (-1);
@@ -82,6 +82,7 @@ int    expand_in_dq(char *value, char **result, int *i, int f)
         dq = ft_strjoin(dq, ft_strndup(&value[*i], 1));
         (*i)++;
     }
+	(*i)++;
     *result = ft_strjoin(*result, dq_content(dq));
     return(ft_strlen(dq_content(dq)));
 }
@@ -161,6 +162,12 @@ int	parse_word(t_token **tokens, int **sequences)
 	return(0);
 }
 
+void	ambiguous_redirect(t_token **tokens)
+{
+	(*tokens) = (*tokens)->next;
+	(*tokens)->value = ft_strdup("*");
+}
+
 int	parse_delimiter(t_token **tokens, int **sequences)
 {
 	*tokens = (*tokens)->next;
@@ -168,5 +175,66 @@ int	parse_delimiter(t_token **tokens, int **sequences)
 	(*tokens)->value = remove_quotes((*tokens)->value, *sequences);
 	if ((*tokens)->value == NULL)
 		return (1);
+	return (0);
+}
+//
+int	collect_inside_quotes(char *value, int *i, char **result)
+{
+	char	q;
+	
+	q = value[*i];
+	(*i)++;
+	if (q == 39 || q == 34)
+	{
+		if (ft_int_strchr(&value[*i], q) == -1 && g_vars.g_err != 1)
+		{
+			errors(2);
+			return (1);
+		}
+	}
+	if (g_vars.g_err != 1)
+	{
+		while (value[*i] && value[*i] != q)
+		{
+			*result = ft_strjoin(*result, ft_strndup(&value[*i], 1));
+			(*i)++;
+		}
+	}
+	(*i)++;
+	return (0);
+}
+
+void	collect_expanded(char *value, char **result, int *i)
+{
+	if (g_vars.g_err != 1)
+		*result = ft_strjoin(*result, ft_strndup(&value[*i], 1));
+	(*i)++;
+}
+
+int	expand_dq(char *value, char **result, int *i)
+{
+	(*i)++;
+	if (is_digit(value[*i]))
+	{
+		if(expand_digit(value, &(*result), &(*i)))
+			return (1);
+	}
+	else if (value[*i] == '$')
+		(*result) = ft_strjoin((*result), ft_itoa(g_vars.pid));
+	else if (value[*i] == '?')
+		(*result) = ft_strjoin((*result), ft_itoa(g_vars.exit_status));
+	else if ((value[*i] == 39 || value[*i] == 34))
+	{
+		(*result) = ft_strjoin((*result), ft_strndup(&value[*i], 1));
+		(*i)++;
+		return (1);
+	}
+	else if ((value[*i] && !is_alpha(value[*i]) && !is_digit(value[*i])))
+	{
+		(*result) = ft_strjoin((*result), "$");
+		return (1);
+	}
+	else
+		simple_expand(value, &(*result), &(*i));
 	return (0);
 }

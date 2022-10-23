@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/22 05:50:19 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 01:12:47 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ typedef struct s_minishell
 t_minishell	g_vars;
 
 // parse
+int	expand_dq(char *value, char **result, int *i);
+int    fill_redir_file(t_token **tokens, t_parse **tmp);
+void    fill_cmd_args(t_token **tokens, t_parse **tmp);
+void	ambiguous_redirect(t_token **tokens);
+void	collect_expanded(char *value, char **result, int *i);
+int	collect_inside_quotes(char *value, int *i, char **result);
 int	parse_word(t_token **tokens, int **sequences);
 int	parse_delimiter(t_token **tokens, int **sequences);
 int	get_exit_status(char **result);

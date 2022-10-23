@@ -6,12 +6,13 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/22 05:52:23 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 02:04:58 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-void print_tokens(t_token *tokens)
+
+void	print_tokens(t_token *tokens)
 {
 	while (tokens)
 	{
@@ -19,6 +20,7 @@ void print_tokens(t_token *tokens)
 		tokens = tokens->next;
 	}
 }
+
 t_token	*parsing(t_token *tokens)
 {
 	int		*sequences;
@@ -31,19 +33,16 @@ t_token	*parsing(t_token *tokens)
 	{
 		if (tokens->e_type == WORD)
 		{
-			if(parse_word(&tokens, &sequences))
+			if (parse_word(&tokens, &sequences))
 				return (NULL);
 		}
 		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT
 				|| tokens->e_type == LESS)
 			&& tokens->next && tokens->next->value[0] == '$')
-		{
-			tokens = tokens->next;
-			tokens->value = ft_strdup("*");
-		}
+			ambiguous_redirect(&tokens);
 		else if (tokens->e_type == LESSANDLESS && tokens->next->e_type == WORD)
 		{
-			if(parse_delimiter(&tokens, &sequences))
+			if (parse_delimiter(&tokens, &sequences))
 				return (NULL);
 		}
 		tokens = tokens->next;
@@ -64,6 +63,7 @@ int	there_is_dollar(char *str)
 	}
 	return (0);
 }
+
 void	print_int_tab(int *tab)
 {
 	int	i;
@@ -76,6 +76,7 @@ void	print_int_tab(int *tab)
 	}
 	printf("\n");
 }
+
 char	*expand_dollar(char *value, int *sequences, int f)
 {
 	int		i;
@@ -95,11 +96,11 @@ char	*expand_dollar(char *value, int *sequences, int f)
 			if (value[i] == '\0')
 			{
 				fill_sequences_adv(sequences, &o, collect_dollar(&result), 1);
-				break;
+				break ;
 			}
 			else if (is_digit(value[i]))
 			{
-				if (expand_digit(&value[i], &result, &i))
+				if (expand_digit(value, &result, &i))
 					continue ;
 			}
 			else if (value[i] == '$')
@@ -146,7 +147,6 @@ char	*expand_dollar(char *value, int *sequences, int f)
 char	*remove_quotes(char *value, int *sequences)
 {
 	int		i;
-	char	q;
 	char	*result;
 
 	i = 0;
@@ -157,25 +157,8 @@ char	*remove_quotes(char *value, int *sequences)
 		{
 			if (value[i] == 34 || value[i] == 39)
 			{
-				q = value[i];
-				i++;
-				if (q == 39 || q == 34)
-				{
-					if (ft_int_strchr(&value[i], q) == -1 && g_vars.g_err != 1)
-					{
-						errors(2);
-						return (NULL);
-					}
-				}
-				if (g_vars.g_err != 1)
-				{
-					while (value[i] && value[i] != q)
-					{
-						result = ft_strjoin(result, ft_strndup(&value[i], 1));
-						i++;
-					}
-				}
-				i++;
+				if (collect_inside_quotes(value, &i, &result))
+					return (NULL);
 			}
 			if (g_vars.g_err != 1 && value[i] != '\0' && value[i] != 34
 				&& value[i] != 39)
@@ -185,11 +168,7 @@ char	*remove_quotes(char *value, int *sequences)
 			}
 		}
 		else
-		{
-			if (g_vars.g_err != 1)
-				result = ft_strjoin(result, ft_strndup(&value[i], 1));
-			i++;
-		}
+			collect_expanded(value, &result, &i);
 	}
 	return (result);
 }
@@ -206,111 +185,21 @@ void	fill_sequences(int len, int *sequences)
 	}
 }
 
-void	fill_tparse(t_token *tokens, t_parse **parse)
-{
-	int		type;
-	t_parse	*tmp;
-
-	tmp = *parse;
-	while (tokens)
-	{
-		if (tokens->e_type == WORD)
-		{
-			if (!tmp->cmd)
-				tmp->cmd = ft_strdup(tokens->value);
-			else
-				tmp->argv = realloc_array(tmp->argv, tokens->value);
-			tokens = tokens->next;
-		}
-		else if (tokens->e_type == GREAT || tokens->e_type == LESS
-			|| tokens->e_type == LESSANDLESS || tokens->e_type == GREATANDGREAT)
-		{
-			if (tokens->next->e_type != WORD)
-			{
-				errors(258);
-				return ;
-			}
-			type = tokens->e_type;
-			tokens = tokens->next;
-			if (!tmp->redir)
-				tmp->redir = init_redir(tokens->value, type);
-			else
-				tmp->redir = add_redir(tmp->redir, tokens->value, type);
-			tokens = tokens->next;
-		}
-		else if (tokens->e_type == PIPE || tokens->e_type == END)
-		{
-			if (tokens->next && tokens->e_type == PIPE
-				&& tokens->next->e_type == END)
-			{
-				errors(3);
-				return ;
-			}
-			tmp = add_command(tmp);
-			tmp = tmp->next;
-			tokens = tokens->next;
-		}
-	}
-}
-
 char	*dq_content(char *value)
 {
 	int		i;
 	char	*result;
-	char	*expd;
 
 	i = 0;
 	result = ft_strdup("");
 	while (value[i])
 	{
-		expd = ft_strdup("");
 		if (value[i] == '$' && value[i + 1]
 			&& (is_alphanum(value[i + 1]) || value[i + 1] == '?'
 				|| value[i + 1] == '$'))
 		{
-			i++;
-			if (is_digit(value[i]))
-			{
-				if (value[i] == '0')
-				{
-					result = ft_strjoin(result, my_getenv(g_vars.my_env, "0"));
-				}
-				i++;
-				while (value[i] && !is_token(value[i]) && value[i] != '$')
-				{
-					result = ft_strjoin(result, ft_strndup(&value[i], 1));
-					i++;
-				}
-				i--;
-			}
-			else if (value[i] == '$')
-				result = ft_strjoin(result, ft_itoa(g_vars.pid));
-			else if (value[i] == '?')
-				result = ft_strjoin(result, ft_itoa(g_vars.exit_status));
-			else if ((value[i] == 39 || value[i] == 34))
-			{
-				result = ft_strjoin(result, ft_strndup(&value[i], 1));
-				i++;
+			if(expand_dq(value, &result, &i))
 				continue ;
-			}
-			else if ((value[i] && !is_alpha(value[i]) && !is_digit(value[i])))
-			{
-				result = ft_strjoin(result, "$");
-				continue ;
-			}
-			else
-			{
-				while ((is_alpha(value[i]) || is_digit(value[i])))
-				{
-					expd = ft_strjoin(expd, ft_strndup(&value[i], 1));
-					i++;
-				}
-				if (my_getenv(g_vars.my_env, expd))
-					result = ft_strjoin(result, my_getenv(g_vars.my_env, expd));
-				else
-					result = ft_strjoin(result, ft_strdup(""));
-				i--;
-			}
 		}
 		else
 			result = ft_strjoin(result, ft_strndup(&value[i], 1));
