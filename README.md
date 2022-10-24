@@ -15,4 +15,3 @@ https://www.rozmichelle.com/pipes-forks-dups/
 https://neilkakkar.com/unix.html#fnref:12
 
 https://www.youtube.com/watch?v=ubt-UjcQUYg
-echo "$USER'       $999'"

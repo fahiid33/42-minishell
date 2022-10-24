@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/23 23:35:31 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:28:48 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,21 @@
 
 void	ambiguous_redirect(t_token **tokens)
 {
+	char	*str;
+	t_vars	*p;
+
+	p = init_vars();
+	str = ft_strdup("");
 	(*tokens) = (*tokens)->next;
+	if (!(*tokens)->value[1])
+		return ;
+	str = ft_substr((*tokens)->value, 1, ft_strlen((*tokens)->value));
+	if (my_getenv(g_vars.my_env, str) || str[0] == 34 || str[0] == 39)
+	{
+		(*tokens)->value = expand_word((*tokens)->value, p, 0);
+		(*tokens)->value = remove_quotes((*tokens)->value, p->seq);
+		return ;
+	}
 	(*tokens)->value = ft_strdup("*");
 }
 
@@ -38,6 +52,7 @@ int	collect_inside_quotes(char *value, int *i, char **result)
 	{
 		if (ft_int_strchr(&value[*i], q) == -1 && g_vars.g_err != 1)
 		{
+			printf("LLL = %s\n", &value[*i]);
 			errors(2);
 			return (1);
 		}

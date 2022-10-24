@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 02:47:09 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 05:19:54 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	collect_dq_check(char *value, int *i, t_vars **p, int f)
 {
 	int	check;
 
-	(*i)++;
 	check = expand_in_dq(value, &(*p)->result, i, f);
 	if (check == -1)
 		return (-1);
