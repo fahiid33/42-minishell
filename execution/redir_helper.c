@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 01:52:02 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/23 05:03:05 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 07:42:03 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,31 @@ int	ambg_redir(char *file)
 	else
 		errors(4);
 	return (2);
+}
+
+int	open_files(t_redir *redir, int mode)
+{
+	if (opendir(redir->file))
+	{
+		ft_putstr_fd("minshell: : Is a directory\n", 2);
+		g_vars.g_err = 1;
+		g_vars.exit_status = 1;
+		return (0);
+	}
+	if(mode == 1)
+	{
+		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		return (redir->fdout);
+	}
+	else if (mode == 2)
+	{
+		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		return (redir->fdout);
+	}
+	else if (mode ==3)
+	{
+		redir->fdin = open(redir->file, O_RDONLY);
+		return (redir->fdin);
+	}
+	return (0);
 }

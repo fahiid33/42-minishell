@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 05:19:54 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/24 08:09:46 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	expand_dollar(char *value, int *i, t_vars **p)
 	}
 	else if (is_digit(value[*i]))
 	{
-		if (expand_digit(value, &(*p)->result, i))
+		if ((*p = fill_sequences_adv(*p, expand_digit(value, &(*p)->result, i), 1)))
 			return (1);
 	}
 	else if (value[*i] == '$')

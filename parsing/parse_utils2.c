@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 05:28:48 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/24 07:44:40 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	collect_inside_quotes(char *value, int *i, char **result)
 	{
 		if (ft_int_strchr(&value[*i], q) == -1 && g_vars.g_err != 1)
 		{
-			printf("LLL = %s\n", &value[*i]);
 			errors(2);
 			return (1);
 		}

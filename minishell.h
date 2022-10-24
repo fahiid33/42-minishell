@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 02:52:52 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 07:43:43 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	file_error(char *filename, int am);
 char	*ft_strjoino(char *s1, char *s2, int frr);
 void	join_string2(char *str, char *s2, int j);
 t_env	*lst_new(char *key, char sep, char *val);
+int		open_files(t_redir *redir, int mode);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*ft_itoa(int n);
 void	check_cmd(t_parse *cmd);

@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 05:53:38 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/24 07:41:52 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,6 @@ void	pipe_redir(t_parse *cmd, int in, int index, int *fd)
 {
 	dup_pipes(cmd, in, index, fd);
 	open_redir(cmd, 0);
-}
-
-int	open_files(t_redir *redir, int mode)
-{
-	if (opendir(redir->file))
-	{
-		ft_putstr_fd("minshell: : Is a directory\n", 2);
-		return (0);
-	}
-	if(mode == 1)
-	{
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		return (redir->fdout);
-	}
-	else if (mode == 2)
-	{
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		return (redir->fdout);
-	}
-	return (0);
 }
 
 int	append_trunc(t_redir *redir)
@@ -94,9 +74,8 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 		}
 		else
 		{
-			if (opendir(redir->file))
-				ft_putstr_fd("minshell: : Is a directory\n", 2);
-			redir->fdin = open(redir->file, O_RDONLY);
+			if (open_files(redir, 3))
+				return (2);
 			fin = redir->fdin;
 		}
 	}
