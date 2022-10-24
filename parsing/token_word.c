@@ -6,11 +6,20 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 23:11:17 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/21 00:34:41 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 03:35:53 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	advance_lex(t_lex *lex)
+{
+	if (lex->cmd[lex->i])
+	{
+			lex->i++;
+			lex->c = lex->cmd[lex->i];
+	}	
+}
 
 void	collect_to_token(int *i, int *j, t_lex **lex, char **val)
 {

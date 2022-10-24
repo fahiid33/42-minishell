@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 02:29:19 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/21 05:10:48 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:48:10 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@ int	heredoc_fd(int fd, char *filename)
 	return (fd);
 }
 
+char	*expand_heredoc(char *doc)
+{
+	t_vars	*p;
+
+	p = init_vars();
+	fill_sequences(ft_strlen(doc), p);
+	doc = expand_word(doc, p, 1);
+	free(p->seq);
+	return (doc);
+}
+
 int	open_heredoc(char *limiter, char *filename)
 {
 	int		fd;
@@ -46,17 +57,13 @@ int	open_heredoc(char *limiter, char *filename)
 			doc = readline(">");
 		else
 			break ;
-		if (!doc)
-			break ;
-		if (!ft_strcmp(doc, limiter))
+		if (!doc || !ft_strcmp(doc, limiter))
 		{
 			if (doc)
 				free(doc);
 			break ;
 		}
-		seq = f_malloc(sizeof(int) * ft_strlen(doc));
-		fill_sequences(ft_strlen(doc), seq);
-		doc = expand_dollar(doc, seq, 1);
+		doc = expand_heredoc(doc);
 		ft_putstr_fd(doc, fd);
 		ft_putchar_fd('\n', fd);
 		if (doc)

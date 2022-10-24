@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:05:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/21 00:36:45 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 03:29:56 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,4 @@ t_redir	*add_redir(t_redir *redir, char *val, int type)
 	new = init_redir(val, type);
 	redir = lst_add_back_redir(redir, new);
 	return (redir);
-}
-
-t_parse	*add_command(t_parse *commad)
-{
-	t_parse	*new;
-
-	new = init_cmd();
-	commad = add_command_back(commad, new);
-	return (commad);
 }

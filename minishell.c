@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/20 23:35:35 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 02:53:27 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,7 @@ void	mino(t_parse *cmds)
 			exec_pipeline(cmds, &g_vars.my_env);
 	}
 }
-void	print_parse(t_parse *parse)
-{
-	int i;
-	while (parse)
-	{
-		i = 0;
-		if (parse->cmd)
-			printf("cmd: %s\n", parse->cmd);
-		while(parse->argv[i])
-		{
-			printf("argv: %s\n", parse->argv[i]);
-			i++;
-		}
-		if(parse->redir && parse->redir->file)
-		{
-			while(parse->redir)
-			{
-				printf("redir type : %d\n", parse->redir->e_type);
-				printf("redir: %s\n", parse->redir->file);
-				printf("redir fdin: %d\n", parse->redir->fdin);
-				printf("redir fdout: %d\n", parse->redir->fdout);
-				parse->redir = parse->redir->next;
-			}
-		}
-		parse = parse->next;
-	}
-}
+
 int	main(int ac, char *av[], char **env)
 {
 	t_parse	*commands;

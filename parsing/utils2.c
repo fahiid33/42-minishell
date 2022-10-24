@@ -6,39 +6,11 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 04:33:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/18 04:44:17 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/23 03:45:57 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	if (!s)
-		return (0);
-	if ((unsigned int)ft_strlen(s) < start || len == 0)
-		return (ft_strdup(""));
-	str = (char *)f_malloc(sizeof(char) * len + 1);
-	if (str == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		if (j < len && i >= start)
-		{
-			str[j] = s[i];
-			j++;
-		}
-		i++;
-	}
-	str[j] = '\0';
-	return (str);
-}
 
 char	*ft_strcat(char *dest, char *src)
 {
