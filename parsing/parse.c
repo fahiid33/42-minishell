@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 02:47:04 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:51:36 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ char	*expand_word(char *value, t_vars *p, int f)
 		i++;
 	}
 	return (p->result);
+}
+
+void	print_int_tab(int *tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if(tab[i] == 1 || tab[i] == 2)
+			printf("%d ", tab[i]);
+		i++;
+	}
+	printf("\n");
 }
 
 char	*remove_quotes(char *value, int *sequences)

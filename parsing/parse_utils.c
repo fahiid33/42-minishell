@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 02:47:29 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:28:22 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,25 @@ t_vars	*fill_sequences_adv(t_vars *p, int len, int x)
 
 int	expand_digit(char *value, char **result, int *i)
 {
+	int	len;
+
+	len = 0;
 	if (value[*i] && value[*i] == '0')
 	{
 		*result = ft_strjoin(*result, my_getenv(g_vars.my_env, "0"));
 		(*i)++;
-		return (1);
+		return (9);
 	}
 	(*i)++;
-	while (value[*i] && !is_token(value[*i]) && value[*i] != '$')
+	while (value[*i] && !is_token(value[*i]) && value[*i] != '$' 
+		&& value[*i] != 34)
 	{
 		*result = ft_strjoin(*result, ft_strndup(&value[*i], 1));
 		(*i)++;
+		len++;
 	}
 	(*i)--;
-	return (0);
+	return (len);
 }
 
 int	simple_expand(char *value, char **result, int *i)
@@ -68,7 +73,7 @@ int	expand_in_dq(char *value, char **result, int *i, int f)
 	char	*dq;
 
 	dq = ft_strdup("");
-	if ((value[*i] == '\0' || ft_int_strchr(&value[*i], 34) == -1) && !f)
+	if ((ft_int_strchr(&value[*i], 34) == -1) && !f)
 	{
 		errors(2);
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/23 23:35:31 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:53:41 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	collect_inside_quotes(char *value, int *i, char **result)
 	(*i)++;
 	if (q == 39 || q == 34)
 	{
-		if (ft_int_strchr(&value[*i], q) == -1 && g_vars.g_err != 1)
+		if (value[*i] && ft_int_strchr(&value[*i], q) == -1
+			&& g_vars.g_err != 1)
 		{
 			errors(2);
 			return (1);

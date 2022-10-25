@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/24 02:47:09 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:47:51 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,14 @@ int	expand_dollar(char *value, int *i, t_vars **p)
 	}
 	else if (is_digit(value[*i]))
 	{
-		if (expand_digit(value, &(*p)->result, i))
+		int ss = expand_digit(value, &(*p)->result, i);
+		if (ss == 9)
+		{
+			*p = fill_sequences_adv(*p, 9, 1);
 			return (1);
+		}
+		else
+			*p = fill_sequences_adv(*p, ss, 1);
 	}
 	else if (value[*i] == '$')
 		*p = fill_sequences_adv(*p, expand_dd(&(*p)->result), 1);
