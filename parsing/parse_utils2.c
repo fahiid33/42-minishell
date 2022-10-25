@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 05:08:03 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/26 00:09:40 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	expand_dq(char *value, char **result, int *i)
 	(*i)++;
 	if (is_digit(value[*i]))
 	{
-		if (expand_digit(value, &(*result), &(*i)))
+		if (expand_digit(value, &(*result), &(*i)) == 9)
 			return (1);
 	}
 	else if (value[*i] == '$')
