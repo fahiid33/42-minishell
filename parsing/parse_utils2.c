@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 03:39:27 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 05:08:03 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int	collect_inside_quotes(char *value, int *i, char **result)
 	char	q;
 
 	q = value[*i];
-		(*i)++;
+	(*i)++;
 	if (q == 39 || q == 34)
 	{
 		if ((value[*i] && ft_int_strchr(&value[*i], q) == -1
-			&& g_vars.g_err != 1 )|| value[*i] == '\0')
+				&& g_vars.g_err != 1) || value[*i] == '\0')
 		{
 			errors(2);
 			return (1);

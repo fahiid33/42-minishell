@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 03:41:14 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 05:16:04 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,9 @@ char	*dq_content(char *value)
 				|| value[i + 1] == '$'))
 		{
 			if (expand_dq(value, &result, &i))
+			{
 				continue ;
+			}
 		}
 		else
 			result = ft_strjoin(result, ft_strndup(&value[i], 1));
