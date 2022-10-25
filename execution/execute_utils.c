@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 04:53:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 02:46:17 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:33:03 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 
 void	check_cmd(t_parse *cmd)
 {
+	int		u;
+	char	*save;
+
+	u = 0;
+	save = ft_strdup(cmd->cmd);
 	if (!cmd->cmd)
 		return ;
-	if (!ft_strcmp(cmd->cmd, "CD"))
-		return ;
-	if (!ft_strcmp(cmd->cmd, "EXIT"))
-		return ;
-	if (!ft_strcmp(cmd->cmd, "EXPORT"))
-		return ;
-	if (!ft_strcmp(cmd->cmd, "UNSET"))
-		return ;
-	else
+	if (is_upper_case(cmd->cmd))
+	{
+		u = 1;
 		cmd->cmd = ft_lowercase(cmd->cmd);
+	}
+	if (builtins_cases(cmd) && ft_strcmp(cmd->cmd, "echo") != 0 && u)
+	{
+		cmd->cmd = save;
+		return ;
+	}
+	if (!ft_strcmp(cmd->cmd, "echo") && u)
+	{
+		cmd->cmd = save;
+		return ;
+	}
 }
 
 void	wrong_cmd(char *cmd)

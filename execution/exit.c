@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:33:50 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 08:22:38 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:45:11 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	my_exit(t_parse *cmd)
 			ft_putstr_fd("exit", 2);
 			ft_putstr_fd("\n", 2);
 		}
-		return (2);
+		exit(g_vars.exit_status);
 	}
 	else if (cmd->argv[1])
 	{

@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/24 08:24:24 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:57:01 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ char	*ft_lowercase(char *str)
 		i++;
 	}
 	return (str);
+}
+
+int	is_upper_case(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] >= 'A' && str[i] <= 'Z')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int	simple_cmd(t_parse *cmd)
@@ -50,8 +66,13 @@ int	exec_builtins(t_parse *head, t_env **my_env)
 	head->argv++;
 	if (!strcmp(head->cmd, "cd"))
 		return (cd(head, (*my_env)));
-	else if (!strcmp(head->cmd, "env"))
+	else if (!strcmp(head->cmd, "env") && !head->argv[0])
 		return (env());
+	else if (!strcmp(head->cmd, "env") && head->argv[0])
+	{
+		file_error(head->argv[0], 0);
+		return (127);
+	}	
 	else if (!strcmp(head->cmd, "export"))
 		return (export(head));
 	else if (!strcmp(head->cmd, "pwd"))

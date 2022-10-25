@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 07:43:43 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:13:00 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ char	**ft_split(char const *s, char c);
 // execution
 
 void	free_unused(int frr, char *s1, char *s2);
+int		is_upper_case(char *str);
+char	*ft_upper_case(char *str);
 void	dup_files(int exe, int fin, int fout);
 void	file_error(char *filename, int am);
 char	*ft_strjoino(char *s1, char *s2, int frr);

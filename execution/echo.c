@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:30:26 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 03:16:40 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:58:32 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int	echo(t_parse *cmd)
 	}
 	else
 	{		
-		if (strncmp(cmd->argv[0], "-n", 2) == 0)
+		if (strncmp(cmd->argv[0], "-n", 2) == 0
+			&& is_upper_case(cmd->cmd) == 0)
 			echo_n(cmd);
 		else
 			echo_e(cmd);

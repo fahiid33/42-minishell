@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 01:52:02 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/24 07:42:03 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:56:15 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	dup_files(int exe, int fin, int fout)
 
 void	file_error(char *filename, int am)
 {
-	if (am)
+	if (am == 1)
 		g_vars.g_err = 1;
 	ft_putstr_fd("minishell: no such file or directory: ", 2);
 	ft_putstr_fd(filename, 2);
@@ -71,7 +71,7 @@ int	open_files(t_redir *redir, int mode)
 		g_vars.exit_status = 1;
 		return (0);
 	}
-	if(mode == 1)
+	if (mode == 1)
 	{
 		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		return (redir->fdout);
@@ -81,7 +81,7 @@ int	open_files(t_redir *redir, int mode)
 		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		return (redir->fdout);
 	}
-	else if (mode ==3)
+	else if (mode == 3)
 	{
 		redir->fdin = open(redir->file, O_RDONLY);
 		return (redir->fdin);

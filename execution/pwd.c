@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:33:17 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 02:29:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:57:33 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,20 @@ int	pwd(void)
 	ft_putstr_fd("\n", 1);
 	g_vars.exit_status = 0;
 	return (g_vars.exit_status);
+}
+
+char	*ft_upper_case(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (str);
+	while (str[i])
+	{
+		if (str[i] >= 'a' && str[i] <= 'z')
+			str[i] -= 32;
+		i++;
+	}
+	return (str);
 }

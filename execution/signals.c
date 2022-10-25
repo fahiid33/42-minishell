@@ -6,11 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 03:00:20 by fstitou           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/10/25 01:53:55 by amoubare         ###   ########.fr       */
-=======
-/*   Updated: 2022/10/24 07:25:51 by fstitou          ###   ########.fr       */
->>>>>>> dfa1d377c115c9d139c578e8d18cccb57cbe886d
+/*   Updated: 2022/10/25 02:03:10 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +34,7 @@ void	sig_child(int sig)
 		{
 			g_vars.exit_sig = -27;
 			ft_putchar_fd('\n', 0);
-			close(rl_instream->_fileno);
+			close(rl_instream->_file);
 			g_vars.exit_status = 1;
 		}
 		else
