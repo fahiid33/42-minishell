@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 01:28:22 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/25 03:54:00 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	expand_in_dq(char *value, char **result, int *i, int f)
 	char	*dq;
 
 	dq = ft_strdup("");
+	(*i)++;
 	if ((ft_int_strchr(&value[*i], 34) == -1) && !f)
 	{
 		errors(2);
@@ -89,6 +90,7 @@ int	expand_in_dq(char *value, char **result, int *i, int f)
 		(*i)++;
 	}
 	*result = ft_strjoin(*result, dq_content(dq));
+	(*i)++;
 	return (ft_strlen(dq_content(dq)));
 }
 

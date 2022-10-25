@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 02:03:31 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/25 03:41:14 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ char	*remove_quotes(char *value, int *sequences)
 
 	i = 0;
 	result = ft_strdup("");
+	if (!ft_strcmp(value, "\'") || !ft_strcmp(value, "\""))
+	{
+		errors(2);
+		return (NULL);
+	}
 	while (value[i] != '\0')
 	{
 		if (sequences[i] != 1)
