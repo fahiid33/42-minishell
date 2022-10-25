@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:26:33 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 02:29:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/24 07:48:30 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	run_export(t_env *my_env, char **argc)
 
 int	export(t_parse *head)
 {
-	if (!head->argv[0])
+	if (!head->argv[0] || !ft_strcmp(head->argv[0], "--"))
 		print_export(g_vars.my_env);
 	else
 		run_export(g_vars.my_env, head->argv);

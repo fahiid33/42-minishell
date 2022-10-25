@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/23 05:02:28 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/24 07:41:52 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ int	append_trunc(t_redir *redir)
 	int	fout;
 
 	fout = 1;
+	if (redir->file[0] == '*' || redir->file[0] == '\0')
+		return (ambg_redir(redir->file));
 	if (redir->e_type == GREAT)
 	{
-		if (redir->file[0] == '*' || redir->file[0] == '\0')
-			return (ambg_redir(redir->file));
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (open_files(redir, 1) == 0)
+			return (2);
 		fout = redir->fdout;
 	}
 	else
 	{
-		if (redir->file[0] == '*' || redir->file[0] == '\0')
-			return (ambg_redir(redir->file));
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (open_files(redir, 2) == 0)
+			return (2);
 		fout = redir->fdout;
 	}
 	return (fout);
@@ -61,6 +61,8 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 	int	fin;
 
 	fin = 0;
+	if (redir->file[0] == '*' || redir->file[0] == '\0')
+		return (ambg_redir(redir->file));
 	if (redir->e_type == LESS)
 	{	
 		if (access(redir->file, F_OK) == -1)
@@ -72,9 +74,8 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 		}
 		else
 		{
-			if (redir->file[0] == '*' || redir->file[0] == '\0')
-				return (ambg_redir(redir->file));
-			redir->fdin = open(redir->file, O_RDONLY);
+			if (open_files(redir, 3))
+				return (2);
 			fin = redir->fdin;
 		}
 	}

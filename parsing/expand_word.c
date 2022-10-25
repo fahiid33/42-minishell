@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/10/25 01:47:51 by amoubare         ###   ########.fr       */
+=======
+/*   Updated: 2022/10/24 08:09:46 by fstitou          ###   ########.fr       */
+>>>>>>> dfa1d377c115c9d139c578e8d18cccb57cbe886d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +37,14 @@ int	expand_dollar(char *value, int *i, t_vars **p)
 	}
 	else if (is_digit(value[*i]))
 	{
+<<<<<<< HEAD
 		int ss = expand_digit(value, &(*p)->result, i);
 		if (ss == 9)
 		{
 			*p = fill_sequences_adv(*p, 9, 1);
+=======
+		if ((*p = fill_sequences_adv(*p, expand_digit(value, &(*p)->result, i), 1)))
+>>>>>>> dfa1d377c115c9d139c578e8d18cccb57cbe886d
 			return (1);
 		}
 		else
@@ -73,7 +81,6 @@ int	collect_dq_check(char *value, int *i, t_vars **p, int f)
 {
 	int	check;
 
-	(*i)++;
 	check = expand_in_dq(value, &(*p)->result, i, f);
 	if (check == -1)
 		return (-1);
