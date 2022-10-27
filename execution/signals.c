@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 03:00:20 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/25 03:55:32 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/27 05:42:37 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	sig_helper(void)
 {
 	if (!g_vars.line)
 	{
+		// printf("from main == %d\n", g_vars.pid);
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_vars.exit_status = 1;
 	}
@@ -26,7 +27,7 @@ void	sig_helper(void)
 		ft_putchar_fd('\n', 0);
 }
 
-void	sig_child(int sig)
+void	main_sig(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -62,12 +63,13 @@ void	sig_handler(int sig)
 		}
 		else if (sig == SIGINT)
 		{
+			printf("from child == %d\n", g_vars.pid);
 			ft_putstr_fd("\n", 1);
 			g_vars.exit_status = 130;
 		}
 	}
 	else
-		sig_child(sig);
+		main_sig(sig);
 }
 
 void	ctrls(int sig)
@@ -75,7 +77,7 @@ void	ctrls(int sig)
 	if (g_vars.pid != 0)
 		sig_handler(sig);
 	else
-		sig_child(sig);
+		main_sig(sig);
 }
 
 void	c_signal(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/25 04:09:02 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/26 00:43:04 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_vars	*init_vars(void)
 	p->o = 0;
 	p->result = ft_strdup("");
 	p->seq = f_malloc(sizeof(int) * 10000);
+	p->ss = 0;
 	return (p);
 }
 
@@ -33,14 +34,8 @@ int	expand_dollar(char *value, int *i, t_vars **p)
 	}
 	else if (is_digit(value[*i]))
 	{
-		int ss = expand_digit(value, &(*p)->result, i);
-		if (ss == 9)
-		{
-			*p = fill_sequences_adv(*p, 9, 1);
+		if (expand_digit_helper(p, value, i))
 			return (1);
-		}
-		else
-			*p = fill_sequences_adv(*p, ss, 1);
 	}
 	else if (value[*i] == '$')
 		*p = fill_sequences_adv(*p, expand_dd(&(*p)->result), 1);

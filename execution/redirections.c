@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 07:41:52 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 03:21:12 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	dup_pipes(t_parse *cmd, int in, int i, int *fd)
 
 void	pipe_redir(t_parse *cmd, int in, int index, int *fd)
 {
-	dup_pipes(cmd, in, index, fd);
 	open_redir(cmd, 0);
+	dup_pipes(cmd, in, index, fd);
 }
 
 int	append_trunc(t_redir *redir)
@@ -43,13 +43,13 @@ int	append_trunc(t_redir *redir)
 		return (ambg_redir(redir->file));
 	if (redir->e_type == GREAT)
 	{
-		if (open_files(redir, 1) == 0)
+		if (open_files(redir, 1) == -1)
 			return (2);
 		fout = redir->fdout;
 	}
 	else
 	{
-		if (open_files(redir, 2) == 0)
+		if (open_files(redir, 2) == -1)
 			return (2);
 		fout = redir->fdout;
 	}
@@ -65,18 +65,17 @@ int	open_read(t_redir *redir, t_parse *cmd, int exec)
 		return (ambg_redir(redir->file));
 	if (redir->e_type == LESS)
 	{	
-		if (access(redir->file, F_OK) == -1)
+		if (access(redir->file, F_OK) != 0)
 		{
-			file_error(redir->file, 0);
-			if (exec)
+			if (read_error(redir->file, exec) == -1)
 				return (-1);
 			exit(g_vars.exit_status);
 		}
 		else
 		{
-			if (open_files(redir, 3))
-				return (2);
-			fin = redir->fdin;
+			fin = open_files(redir, 3);
+			if (fin == -1)
+				return (-1);
 		}
 	}
 	else

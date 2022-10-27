@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/25 01:13:00 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 03:50:35 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_vars
 	int		*seq;
 	int		o;
 	int		check;
+	int		ss;
 }	t_vars;
 
 typedef struct s_redir
@@ -109,6 +110,7 @@ int		expand_dollar(char *value, int *i, t_vars **p);
 void	errors2(int exit_status);
 t_vars	*init_vars(void);
 int		fill_cmd(t_token **tokens, t_parse **tmp);
+int		expand_digit_helper(t_vars **p, char *value, int *i);
 int		expand_dq(char *value, char **result, int *i);
 int		fill_redir_file(t_token **tokens, t_parse **tmp);
 void	fill_cmd_args(t_token **tokens, t_parse **tmp);
@@ -124,6 +126,7 @@ int		collect_dollar(char **result);
 int		collect_squote(char *value, char **result, int *i, int f);
 int		expand_in_dq(char *value, char **result, int *i, int f);
 t_vars	*fill_sequences_adv(t_vars *p, int len, int x);
+int		only_space(char *str, char c);
 int		simple_expand(char *value, char **result, int *i);
 int		expand_digit(char *value, char **result, int *i);
 void	collect_to_token(int *i, int *j, t_lex **lex, char **val);
@@ -157,6 +160,9 @@ void	token_less(t_lex *lex, t_token *tokens);
 void	token_word(t_lex *lex, t_token *tokens);
 void	end_token(t_token *tokens);
 void	*f_malloc(size_t size);
+void	save_address(char *add);
+void	_errors(int err, char *str);
+int		read_error(char *file, int exec);
 void	*realloc_array(char **arg, char *str);
 char	*ft_strdup(char *str);
 char	*ft_strjoin(char *s1, char *s2);

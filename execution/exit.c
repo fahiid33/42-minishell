@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:33:50 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/25 01:45:11 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 03:15:56 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	run_exit(t_parse *cmd)
 {
+	int	i;
+
+	i = 0;
 	check_numb(cmd->argv[0]);
 	g_vars.exit_status = atoi(cmd->argv[0]);
 	if (!is_piped())
@@ -32,7 +35,7 @@ int	my_exit(t_parse *cmd)
 		}
 		exit(g_vars.exit_status);
 	}
-	else if (cmd->argv[1])
+	else if (!str_digit(cmd->argv[0]) && cmd->argv[1])
 	{
 		if (!is_piped())
 			ft_putstr_fd("exit\n", 2);

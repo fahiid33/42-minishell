@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export-env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:29:30 by aainhaja          #+#    #+#             */
-/*   Updated: 2022/10/18 04:20:15 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/27 02:26:10 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	check_numb(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[0] == '-' || str[0] == '+')
+			i++;
 		if (!is_digit(str[i]))
 		{
 			if (!is_piped())

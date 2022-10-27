@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 04:53:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/25 01:33:03 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 05:36:57 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ void	wrong_cmd(char *cmd)
 		{
 			write(2, error, ft_strlen(error));
 			write(2, "\n", 1);
+			g_vars.exit_status = 127;
 		}
 		else
 		{
 			write(2, cmd, ft_strlen(cmd));
 			write(2, ": command not found\n", 21);
+			g_vars.exit_status = 127;
 		}
-		g_vars.exit_status = 127;
 		exit(g_vars.exit_status);
 	}
 	else if (errno == 13 || errno == 21)
@@ -113,7 +114,7 @@ void	execute(t_parse *command, t_env **env)
 		g_vars.exit_status = 0;
 		exit(g_vars.exit_status);
 	}
-	if (command->cmd[0] == '/')
+	if (command->cmd[0] == '/' && access(command->cmd, F_OK) != 0)
 		wrong_cmd(command->cmd);
 	if (execve(path, command->argv, new_env) == -1)
 		wrong_cmd(command->cmd);

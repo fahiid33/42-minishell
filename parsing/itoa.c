@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:58:28 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/23 04:02:10 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/26 00:44:06 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_itoa(int n)
 	i = ft_count(j);
 	if (j == 0)
 		return (ft_strdup("0"));
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	str = (char *)f_malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (0);
 	if (n < 0)

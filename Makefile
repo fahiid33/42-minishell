@@ -22,7 +22,7 @@ all : $(NAME)
 
 $(NAME):
 	
-	@gcc $(SRC) $(LDFLAGS) $(CPPFLAGS) -lreadline  -o $(NAME) $(SANITIZE)
+	@gcc $(SRC) $(LDFLAGS) $(CPPFLAGS) -lreadline  -o $(NAME)
 	@echo "Mino 👍👍👍"
 
 $(NAME_BONUS) : 

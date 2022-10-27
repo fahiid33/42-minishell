@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 01:52:02 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/25 01:56:15 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 03:20:56 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	dup_files(int exe, int fin, int fout)
 {
-	if (!exe)
+	if (!g_vars.g_err)
 	{
-		if (!g_vars.g_err)
-		{
-			if (fin != 0)
-				dup2(fin, 0);
-			if (fout != 1)
-				dup2(fout, 1);
-		}
+		if (fin > 0)
+			dup2(fin, 0);
+		if (fout > 1)
+			dup2(fout, 1);
 	}
 }
 
@@ -42,7 +39,7 @@ void	wrong_cmd_helper(char *error, int w)
 	{
 		(void)error;
 		g_vars.exit_status = 1;
-		exit(g_vars.exit_sig);
+		exit(g_vars.exit_status);
 	}
 	else
 	{
@@ -60,31 +57,4 @@ int	ambg_redir(char *file)
 	else
 		errors(4);
 	return (2);
-}
-
-int	open_files(t_redir *redir, int mode)
-{
-	if (opendir(redir->file))
-	{
-		ft_putstr_fd("minshell: : Is a directory\n", 2);
-		g_vars.g_err = 1;
-		g_vars.exit_status = 1;
-		return (0);
-	}
-	if (mode == 1)
-	{
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		return (redir->fdout);
-	}
-	else if (mode == 2)
-	{
-		redir->fdout = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		return (redir->fdout);
-	}
-	else if (mode == 3)
-	{
-		redir->fdin = open(redir->file, O_RDONLY);
-		return (redir->fdin);
-	}
-	return (0);
 }

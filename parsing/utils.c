@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:06:43 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/23 04:17:33 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/26 02:02:22 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] != '\0')
 		i++;
 	return (i);
@@ -65,4 +67,17 @@ void	errors2(int exit_status)
 		g_vars.g_err = 1;
 		g_vars.exit_status = 1;
 	}
+}
+
+int	expand_digit_helper(t_vars **p, char *value, int *i)
+{
+	(*p)->ss = expand_digit(value, &(*p)->result, i);
+	if ((*p)->ss == 9)
+	{
+		*p = fill_sequences_adv(*p, 9, 1);
+		return (1);
+	}
+	else
+		*p = fill_sequences_adv(*p, (*p)->ss, 1);
+	return (0);
 }

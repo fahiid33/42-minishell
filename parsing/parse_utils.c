@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/26 00:06:42 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/26 00:43:27 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	expand_digit(char *value, char **result, int *i)
 		return (9);
 	}
 	(*i)++;
-	while (value[*i] && !is_token(value[*i]) && value[*i] != '$' 
+	while (value[*i] && !is_token(value[*i]) && value[*i] != '$'
 		&& value[*i] != 34)
 	{
 		*result = ft_strjoin(*result, ft_strndup(&value[*i], 1));

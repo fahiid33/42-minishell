@@ -1,47 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/16 02:33:17 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/27 01:05:59 by fstitou          ###   ########.fr       */
+/*   Created: 2022/10/27 02:12:33 by fstitou           #+#    #+#             */
+/*   Updated: 2022/10/27 03:51:16 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	pwd(void)
+void	_errors(int err, char *str)
 {
-	char	*cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	if (err == 1)
 	{
-		ft_putstr_fd("pwd: cannot get current working directory\n", 2);
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(" No such file or directory", 2);
+		ft_putchar_fd('\n', 2);
 		g_vars.exit_status = 1;
-		return (g_vars.exit_status);
 	}
-	ft_putstr_fd(cwd, 1);
-	ft_putstr_fd("\n", 1);
-	free(cwd);
-	g_vars.exit_status = 0;
-	return (g_vars.exit_status);
 }
 
-char	*ft_upper_case(char *str)
+void	save_address(char *add)
+{
+	g_vars.alloc[g_vars.index] = add;
+	g_vars.index++;
+}
+
+int	only_space(char *str, char c)
 {
 	int	i;
 
 	i = 0;
-	if (!str)
-		return (str);
+	if (!str && (c == 34 || c == 39))
+		return (0);
+	else if (!str)
+		return (1);
 	while (str[i])
 	{
-		if (str[i] >= 'a' && str[i] <= 'z')
-			str[i] -= 32;
+		if (str[i] != ' ')
+			return (0);
 		i++;
 	}
-	return (str);
+	return (1);
 }

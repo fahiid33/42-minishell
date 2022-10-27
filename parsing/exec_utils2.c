@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:50:16 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/23 04:17:20 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/27 05:42:58 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ void	ft_putstr_fd(char *s, int fd)
 
 int	only_enter(void)
 {
+	if (g_vars.line[0] == '$'
+		&& !my_getenv(g_vars.my_env,
+			ft_substr(g_vars.line, 1, ft_strlen(g_vars.line))))
+	{
+		free(g_vars.line);
+		g_vars.exit_status = 0;
+		return (1);
+	}
 	if (g_vars.line[0] == '\0' || ft_is_space())
 	{
 		free(g_vars.line);

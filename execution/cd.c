@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:47 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/10 02:29:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 02:16:24 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ int	check_minus(char *arg, char c)
 		return (0);
 }
 
-void	change_pwd(char *pwd)
+void	change_pwd(char *oldpwd)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
+	save_address(cwd);
 	update_export(&g_vars.my_env, "PWD", '=', cwd);
-	update_export(&g_vars.my_env, "OLDPWD", '=', pwd);
+	update_export(&g_vars.my_env, "OLDPWD", '=', oldpwd);
 }
 
 int	home_cd(t_env *env)
@@ -41,6 +42,7 @@ int	home_cd(t_env *env)
 
 	home = my_getenv(env, "HOME");
 	cwd = getcwd(NULL, 0);
+	save_address(cwd);
 	if (!home)
 	{
 		ft_putstr_fd("cd: HOME not set\n", 2);
@@ -68,20 +70,32 @@ void	cd_minus(char *pwd)
 	o_pwd = my_getenv(g_vars.my_env, "OLDPWD");
 	if (o_pwd)
 	{
-		ft_putstr_fd(o_pwd, 1);
-		ft_putchar_fd('\n', 1);
-		update_export(&g_vars.my_env, "PWD", '=', o_pwd);
-		update_export(&g_vars.my_env, "OLDPWD", '=', pwd);
-		chdir(o_pwd);
-		g_vars.exit_status = 0;
+		if (!chdir(o_pwd))
+		{
+			ft_putstr_fd(o_pwd, 1);
+			ft_putchar_fd('\n', 1);
+			update_export(&g_vars.my_env, "PWD", '=', o_pwd);
+			update_export(&g_vars.my_env, "OLDPWD", '=', pwd);
+			g_vars.exit_status = 0;
+		}
+		else
+		{
+			ft_putstr_fd("minishell: cd: ", 2);
+			ft_putstr_fd(o_pwd, 2);
+			ft_putstr_fd(" No such file or directory", 2);
+			ft_putchar_fd('\n', 2);
+			g_vars.exit_status = 1;
+		}
 	}
 }
 
 int	cd(t_parse *head, t_env *env)
 {
 	char	*pwd;
+	char	*cwd;
 
 	pwd = getcwd(NULL, 0);
+	save_address(pwd);
 	if (!head->argv[0] || !strcmp(head->argv[0], "~")
 		|| head->argv[0][0] == '\0')
 		return (home_cd(env));
@@ -89,16 +103,15 @@ int	cd(t_parse *head, t_env *env)
 		cd_minus(pwd);
 	else if (!chdir(head->argv[0]))
 	{
-		change_pwd(pwd);
+		cwd = getcwd(NULL, 0);
+		save_address(cwd);
+		if (cwd)
+			change_pwd(pwd);
+		else
+			ft_putstr_fd("cd: error retrieving current directory\n", 2);
 		g_vars.exit_status = 0;
 	}
 	else
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(head->argv[0], 2);
-		ft_putstr_fd(" No such file or directory", 2);
-		ft_putchar_fd('\n', 2);
-		g_vars.exit_status = 1;
-	}
+		_errors(1, head->argv[0]);
 	return (g_vars.exit_status);
 }
