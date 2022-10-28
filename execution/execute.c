@@ -62,7 +62,6 @@ void	exec_simple_cmd(t_parse *cmd, t_env **env)
 	fds[0] = dup(0);
 	fds[1] = dup(1);
 	open_redir(cmd, 1);
-	// check_cmd(cmd);
 	if (!g_vars.g_err)
 		g_vars.exit_status = exec_builtins(cmd, env);
 	dup2(fds[0], 0);

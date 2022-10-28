@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 11:01:15 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:17:35 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_minishell
 t_minishell	g_vars;
 
 // parse
+int		parsing_helper(t_token **tokens, t_token *prev, t_vars *p);
 int		expand_word_norm(char *value, int *i, t_vars **p, int f);
 int		collect_dq_check(char *value, int *i, t_vars **p, int f);
 int		collect_sq_check(char *value, int *i, t_vars **p, int f);

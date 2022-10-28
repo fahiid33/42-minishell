@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   itoa.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:58:28 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 12:20:50 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:29:04 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*to_exp(char *to_expand, int flag)
 {
 	char	**exp;
 
-	if (flag)
+	if (flag && there_is_space(to_expand))
 	{
 		exp = ft_split(my_getenv(g_vars.my_env, to_expand), ' ');
 		to_expand = _2d_arr_to_str(exp);
@@ -39,6 +39,7 @@ char	*_2d_arr_to_str(char **arr)
 	while (arr[i])
 	{
 		str = ft_strjoin(str, arr[i]);
+		str = ft_strjoin(str, " ");
 		i++;
 	}
 	return (str);

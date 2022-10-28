@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 12:10:35 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:16:54 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*parsing(t_token *tokens)
 {
 	t_token	*tmp;
 	t_vars	*p;
-	t_token  *prev;
+	t_token	*prev;
 
 	tmp = tokens->next;
 	prev = tokens;
@@ -24,20 +24,8 @@ t_token	*parsing(t_token *tokens)
 	while (tokens->e_type != END)
 	{
 		p = init_vars();
-		if (tokens->e_type == WORD)
-			if (tokens->value[0] == '$' && (prev->value == NULL || prev->e_type == PIPE))
-				g_vars.flag++;
-			if (parse_word(&tokens, p))
-				return (NULL);
-		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT
-				|| tokens->e_type == LESS)
-			&& tokens->next && tokens->next->value[0] == '$')
-			ambiguous_redirect(&tokens);
-		else if (tokens->e_type == LESSANDLESS && tokens->next->e_type == WORD)
-		{
-			if (parse_delimiter(&tokens, p))
-				return (NULL);
-		}
+		if (parsing_helper(&tokens, prev, p))
+			return (NULL);
 		prev = tokens;
 		tokens = tokens->next;
 	}

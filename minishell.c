@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 10:47:12 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:33:11 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,6 @@ void	mino(t_parse *cmds)
 			exec_pipeline(cmds, &g_vars.my_env);
 	}
 }
-// void	print_tokens(t_token *tokens)
-// {
-// 	while (tokens)
-// 	{
-// 		printf("token: %s\n", tokens->value);
-// 		tokens = tokens->next;
-// 	}
-// }
 
 int	main(int ac, char *av[], char **env)
 {
@@ -59,7 +51,7 @@ int	main(int ac, char *av[], char **env)
 	while (1)
 	{
 		init_gs_and_c_signal();
-		g_vars.line = readline("missi-1.0$ ");
+		g_vars.line = readline("minishell-1.0$ ");
 		if (!g_vars.line)
 			exit_shell();
 		if (only_enter())

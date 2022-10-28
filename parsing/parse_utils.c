@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 12:21:18 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:08:19 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	simple_expand(char *value, char **result, int *i, int flag)
 	else
 		*result = ft_strjoin(*result, ft_strdup(""));
 	(*i)--;
-	// printf("result: %s\n", *result);
 	return (len);
 }
 

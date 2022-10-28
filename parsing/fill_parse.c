@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 23:20:04 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 11:00:38 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:10:36 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,24 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 
 void	fill_cmd_args(t_token **tokens, t_parse **tmp)
 {
+	int		i;
+	char	**argv;
+
 	if (g_vars.flag && !(*tmp)->cmd && there_is_space((*tokens)->value))
 	{
-		int		i;
-		char	**argv;
-	
 		i = 0;
 		g_vars.flag--;
 		argv = ft_split(split_args((*tokens)->value, 0), ' ');
 		if (!(*tmp)->cmd)
 		{
-			(*tmp)->cmd = split_args((*tokens)->value, 1);;
+			(*tmp)->cmd = split_args((*tokens)->value, 1);
 			while (argv[i])
 				(*tmp)->argv = realloc_array((*tmp)->argv,
 						ft_strdup(argv[i++]));
 		}
 		(*tokens) = (*tokens)->next;
 	}
-	else 
+	else
 	{
 		if (!(*tmp)->cmd)
 			(*tmp)->cmd = ft_strdup((*tokens)->value);

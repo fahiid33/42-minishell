@@ -6,7 +6,7 @@
 /*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:50:16 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 05:37:22 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:09:50 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	only_enter(void)
 		if (str_is_alphanum(ft_substr(g_vars.line, 1, ft_strlen(g_vars.line))))
 		{
 			str = my_getenv(g_vars.my_env, ft_substr(g_vars.line, 1,
-					ft_strlen(g_vars.line)));
+						ft_strlen(g_vars.line)));
 			if (!str)
 			{
 				g_vars.exit_status = 0;
@@ -88,18 +88,4 @@ int	only_enter(void)
 		return (1);
 	}
 	return (0);
-}
-
-int	ft_is_space(void)
-{
-	int	i;
-
-	i = 0;
-	while (g_vars.line[i])
-	{
-		if (g_vars.line[i] != ' ')
-			return (0);
-		i++;
-	}
-	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:47 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 11:53:00 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 14:09:15 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int	cd(t_parse *head, t_env *env)
 
 	pwd = getcwd(NULL, 0);
 	save_address(pwd);
-	if (head->argv[0] && (!strcmp(head->argv[0], "~") || 
-		head->argv[0][0] == '~'))
+	if (head->argv[0] && (!strcmp(head->argv[0], "~")
+			|| head->argv[0][0] == '~'))
 		return (cd_tilde(head));
 	if (!head->argv[0] || head->argv[0][0] == '\0')
 		return (home_cd());
