@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/27 03:50:35 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:28:02 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		collect_squote(char *value, char **result, int *i, int f);
 int		expand_in_dq(char *value, char **result, int *i, int f);
 t_vars	*fill_sequences_adv(t_vars *p, int len, int x);
 int		only_space(char *str, char c);
-int		simple_expand(char *value, char **result, int *i);
+int		simple_expand(char *value, char **result, int *i, int flag);
 int		expand_digit(char *value, char **result, int *i);
 void	collect_to_token(int *i, int *j, t_lex **lex, char **val);
 void	continue_to_dquote(int *i, t_lex **lex, char **val);

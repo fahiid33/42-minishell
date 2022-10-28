@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/26 00:43:04 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:28:09 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	expand_dollar(char *value, int *i, t_vars **p)
 		return (1);
 	}
 	else
-		*p = fill_sequences_adv(*p, simple_expand(value, &(*p)->result, i), 1);
+		*p = fill_sequences_adv(*p, simple_expand(value, &(*p)->result, i, 1), 1);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 02:53:27 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:56:17 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	main(int ac, char *av[], char **env)
 	init_env(env);
 	while (1)
 	{
+		// printf("from main.c == %d\n", g_vars.pid);
 		init_gs_and_c_signal();
 		g_vars.line = readline("missi-1.0$ ");
 		if (!g_vars.line)

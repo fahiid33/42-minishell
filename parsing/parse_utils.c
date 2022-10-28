@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 03:22:18 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/26 00:43:27 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:52:43 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,27 @@ int	expand_digit(char *value, char **result, int *i)
 	(*i)--;
 	return (len);
 }
+char	*_2d_arr_to_str(char **arr)
+{
+	char	*str;
+	int		i;
 
-int	simple_expand(char *value, char **result, int *i)
+	i = 0;
+	str = ft_strdup("");
+	while (arr[i])
+	{
+		str = ft_strjoin(str, arr[i]);
+		str = ft_strjoin(str, " ");
+		i++;
+	}
+	return (str);
+}
+
+int	simple_expand(char *value, char **result, int *i, int flag)
 {
 	char	*to_expand;
 	int		len;
+	char	**exp;
 
 	to_expand = ft_strdup("");
 	len = 0;
@@ -59,7 +75,14 @@ int	simple_expand(char *value, char **result, int *i)
 	}
 	if (my_getenv(g_vars.my_env, to_expand))
 	{
-		*result = ft_strjoin(*result, my_getenv(g_vars.my_env, to_expand));
+		if (flag)
+		{
+			exp = ft_split(my_getenv(g_vars.my_env, to_expand), ' ');
+			to_expand = _2d_arr_to_str(exp);
+		}
+		else
+			to_expand = my_getenv(g_vars.my_env, to_expand);
+		*result = ft_strjoin(*result, to_expand);
 		len = ft_strlen(my_getenv(g_vars.my_env, to_expand));
 	}
 	else

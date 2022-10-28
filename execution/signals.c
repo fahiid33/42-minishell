@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 03:00:20 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/27 05:42:37 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:24:18 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ void	sig_helper(void)
 {
 	if (!g_vars.line)
 	{
-		// printf("from main == %d\n", g_vars.pid);
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_vars.exit_status = 1;
 	}
-	else
+	else if (g_vars.pid != 0)
+	{
 		ft_putchar_fd('\n', 0);
+	}
 }
 
 void	main_sig(int sig)
@@ -35,7 +36,7 @@ void	main_sig(int sig)
 		{
 			g_vars.exit_sig = -27;
 			ft_putchar_fd('\n', 0);
-			close(rl_instream->_file);
+			close(rl_instream->_fileno);
 			g_vars.exit_status = 1;
 		}
 		else
@@ -56,6 +57,7 @@ void	sig_handler(int sig)
 {
 	if (!kill(g_vars.pid, sig))
 	{
+		g_vars.pid = 0;
 		if (sig == SIGQUIT)
 		{
 			ft_putstr_fd("Quit: 3\n", 1);
@@ -63,12 +65,11 @@ void	sig_handler(int sig)
 		}
 		else if (sig == SIGINT)
 		{
-			printf("from child == %d\n", g_vars.pid);
 			ft_putstr_fd("\n", 1);
 			g_vars.exit_status = 130;
 		}
 	}
-	else
+	else if (g_vars.pid != 0)
 		main_sig(sig);
 }
 

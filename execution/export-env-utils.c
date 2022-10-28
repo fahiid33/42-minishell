@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:31:07 by aainhaja          #+#    #+#             */
-/*   Updated: 2022/10/10 02:29:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 09:11:00 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_env(char **env)
 char	*my_getenv(t_env *env, char *key)
 {
 	t_env	*tmp;
+	char	**val;
 
 	tmp = (env);
 	while (tmp)

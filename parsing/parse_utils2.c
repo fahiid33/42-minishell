@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:32:57 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/27 03:51:05 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 15:26:49 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ int	expand_dq(char *value, char **result, int *i)
 		return (1);
 	}
 	else
-		simple_expand(value, &(*result), &(*i));
+		simple_expand(value, &(*result), &(*i), 0);
 	return (0);
 }

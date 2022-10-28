@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:47 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/27 02:16:24 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:35:01 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_minus(char *arg, char c)
 	i = 1;
 	while (arg[i] && arg[i] == c)
 		i++;
-	if (!arg[i])
+	if (!arg[i] && arg[0] == '-')
 		return (1);
 	else
 		return (0);

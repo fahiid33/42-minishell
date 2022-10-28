@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 23:20:04 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/26 00:27:21 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/27 16:02:07 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,29 @@ void	fill_tparse(t_token *tokens, t_parse **parse)
 	}
 }
 
+int	there_is_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	fill_cmd_args(t_token **tokens, t_parse **tmp)
 {
+	
 	if (!(*tmp)->cmd)
 		(*tmp)->cmd = ft_strdup((*tokens)->value);
 	else
-		(*tmp)->argv = realloc_array((*tmp)->argv, (*tokens)->value);
+	{	
+		(*tmp)->argv = realloc_array((*tmp)->argv, (*tokens)->value);	
+	}
 	(*tokens) = (*tokens)->next;
 }
 
