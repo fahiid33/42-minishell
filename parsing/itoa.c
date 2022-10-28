@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:58:28 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 10:01:51 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 12:20:50 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*to_exp(char *to_expand, int flag)
 	{
 		exp = ft_split(my_getenv(g_vars.my_env, to_expand), ' ');
 		to_expand = _2d_arr_to_str(exp);
-		// printf("to_expand: %s\n", to_expand);
 		return (to_expand);
 	}
 	else
@@ -40,7 +39,6 @@ char	*_2d_arr_to_str(char **arr)
 	while (arr[i])
 	{
 		str = ft_strjoin(str, arr[i]);
-		str = ft_strjoin(str, " ");
 		i++;
 	}
 	return (str);
