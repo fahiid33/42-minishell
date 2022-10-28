@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 02:12:33 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/28 04:51:54 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:53:10 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ t_parse	*add_command(t_parse *commad)
 	new = init_cmd();
 	commad = add_command_back(commad, new);
 	return (commad);
+}
+
+int	check_minus(char *arg, char c)
+{
+	int	i;
+
+	i = 1;
+	while (arg[i] && arg[i] == c)
+		i++;
+	if (!arg[i] && arg[0] == '-')
+		return (1);
+	else
+		return (0);
 }

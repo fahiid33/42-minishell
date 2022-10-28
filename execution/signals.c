@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 03:00:20 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/28 04:36:55 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 09:54:11 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig_helper(void)
 	{
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_vars.exit_status = 1;
 	}
@@ -36,7 +36,7 @@ void	main_sig(int sig)
 		{
 			g_vars.exit_sig = -27;
 			ft_putchar_fd('\n', 0);
-			close(rl_instream->_file);
+			close(rl_instream->_fileno);
 			g_vars.exit_status = 1;
 		}
 		else

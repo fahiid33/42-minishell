@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 01:17:49 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 08:51:52 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:05:03 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,17 @@ t_token	*parsing(t_token *tokens)
 	t_vars	*p;
 	t_token  *prev;
 
-	p = init_vars();
 	tmp = tokens->next;
 	prev = tokens;
 	tokens = tokens->next;
 	while (tokens->e_type != END)
 	{
+		p = init_vars();
 		if (tokens->e_type == WORD)
-		{
 			if (tokens->value[0] == '$' && (prev->value == NULL || prev->e_type == PIPE))
 				g_vars.flag++;
 			if (parse_word(&tokens, p))
 				return (NULL);
-		}
 		if ((tokens->e_type == GREATANDGREAT || tokens->e_type == GREAT
 				|| tokens->e_type == LESS)
 			&& tokens->next && tokens->next->value[0] == '$')

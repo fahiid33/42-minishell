@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 05:44:55 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 11:01:15 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int		expand_dollar(char *value, int *i, t_vars **p);
 void	errors2(int exit_status);
 char	*_2d_arr_to_str(char **arr);
 char	*to_exp(char *to_expand, int flag);
+char	*split_args(char *str, int flag);
+int		there_is_space(char *str);
 t_vars	*init_vars(void);
 int		fill_cmd(t_token **tokens, t_parse **tmp);
 int		expand_digit_helper(t_vars **p, char *value, int *i);

@@ -6,24 +6,11 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:47 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/27 14:35:01 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 11:53:00 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	check_minus(char *arg, char c)
-{
-	int	i;
-
-	i = 1;
-	while (arg[i] && arg[i] == c)
-		i++;
-	if (!arg[i] && arg[0] == '-')
-		return (1);
-	else
-		return (0);
-}
 
 void	change_pwd(char *oldpwd)
 {
@@ -35,12 +22,12 @@ void	change_pwd(char *oldpwd)
 	update_export(&g_vars.my_env, "OLDPWD", '=', oldpwd);
 }
 
-int	home_cd(t_env *env)
+int	home_cd(void)
 {
 	char	*home;
 	char	*cwd;
 
-	home = my_getenv(env, "HOME");
+	home = my_getenv(g_vars.my_env, "HOME");
 	cwd = getcwd(NULL, 0);
 	save_address(cwd);
 	if (!home)
@@ -79,14 +66,36 @@ void	cd_minus(char *pwd)
 			g_vars.exit_status = 0;
 		}
 		else
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			ft_putstr_fd(o_pwd, 2);
-			ft_putstr_fd(" No such file or directory", 2);
-			ft_putchar_fd('\n', 2);
-			g_vars.exit_status = 1;
-		}
+			_errors(1, o_pwd);
 	}
+}
+
+int	cd_tilde(t_parse *head)
+{
+	char	*dir;
+	char	*old_pwd;
+
+	old_pwd = getcwd(NULL, 0);
+	save_address(old_pwd);
+	if (!strcmp(head->argv[0], "~"))
+		return (home_cd());
+	dir = strchr(head->argv[0], '/');
+	if (dir)
+	{
+		dir++;
+		if (home_cd() == 1)
+			return (1);
+		if (!chdir(dir))
+		{
+			change_pwd(old_pwd);
+			g_vars.exit_status = 0;
+		}
+		else
+			_errors(1, head->argv[0]);
+	}
+	else
+		_errors(1, head->argv[0]);
+	return (g_vars.exit_status);
 }
 
 int	cd(t_parse *head, t_env *env)
@@ -96,9 +105,11 @@ int	cd(t_parse *head, t_env *env)
 
 	pwd = getcwd(NULL, 0);
 	save_address(pwd);
-	if (!head->argv[0] || !strcmp(head->argv[0], "~")
-		|| head->argv[0][0] == '\0')
-		return (home_cd(env));
+	if (head->argv[0] && (!strcmp(head->argv[0], "~") || 
+		head->argv[0][0] == '~'))
+		return (cd_tilde(head));
+	if (!head->argv[0] || head->argv[0][0] == '\0')
+		return (home_cd());
 	else if (!strcmp(head->argv[0], "-"))
 		cd_minus(pwd);
 	else if (!chdir(head->argv[0]))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 08:46:26 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 10:47:12 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ void	mino(t_parse *cmds)
 			exec_pipeline(cmds, &g_vars.my_env);
 	}
 }
+// void	print_tokens(t_token *tokens)
+// {
+// 	while (tokens)
+// 	{
+// 		printf("token: %s\n", tokens->value);
+// 		tokens = tokens->next;
+// 	}
+// }
 
 int	main(int ac, char *av[], char **env)
 {
