@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 00:29:36 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/27 15:28:09 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 04:53:31 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,32 @@ t_vars	*init_vars(void)
 	return (p);
 }
 
-int	expand_dollar(char *value, int *i, t_vars **p)
+int	expand_dollar(char *val, int *i, t_vars **p)
 {
 	(*i)++;
-	if (value[*i] == '\0')
+	if (val[*i] == '\0')
 	{
 		*p = fill_sequences_adv(*p, collect_dollar(&(*p)->result), 1);
 		return (2);
 	}
-	else if (is_digit(value[*i]))
+	else if (is_digit(val[*i]))
 	{
-		if (expand_digit_helper(p, value, i))
+		if (expand_digit_helper(p, val, i))
 			return (1);
 	}
-	else if (value[*i] == '$')
+	else if (val[*i] == '$')
 		*p = fill_sequences_adv(*p, expand_dd(&(*p)->result), 1);
-	else if (value[*i] == '?')
+	else if (val[*i] == '?')
 		*p = fill_sequences_adv(*p, get_exit_status(&(*p)->result), 1);
-	else if ((value[*i] == 39 || value[*i] == 34))
+	else if ((val[*i] == 39 || val[*i] == 34))
 		return (1);
-	else if ((value[*i] && !is_alpha(value[*i]) && !is_digit(value[*i])))
+	else if ((val[*i] && !is_alpha(val[*i]) && !is_digit(val[*i])))
 	{
 		*p = fill_sequences_adv(*p, collect_dollar(&(*p)->result), 1);
 		return (1);
 	}
 	else
-		*p = fill_sequences_adv(*p, simple_expand(value, &(*p)->result, i, 1), 1);
+		*p = fill_sequences_adv(*p, simple_expand(val, &(*p)->result, i, 1), 1);
 	return (0);
 }
 

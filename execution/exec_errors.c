@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 02:12:33 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/27 03:51:16 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 04:51:54 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,13 @@ int	only_space(char *str, char c)
 		i++;
 	}
 	return (1);
+}
+
+t_parse	*add_command(t_parse *commad)
+{
+	t_parse	*new;
+
+	new = init_cmd();
+	commad = add_command_back(commad, new);
+	return (commad);
 }

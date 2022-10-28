@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:50:16 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/27 05:42:58 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 05:37:22 by amoubare         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,36 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
+int	str_is_alphanum(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!is_alphanum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	only_enter(void)
 {
-	if (g_vars.line[0] == '$'
-		&& !my_getenv(g_vars.my_env,
-			ft_substr(g_vars.line, 1, ft_strlen(g_vars.line))))
+	char	*str;
+
+	if (g_vars.line[0] == '$')
 	{
-		free(g_vars.line);
-		g_vars.exit_status = 0;
-		return (1);
+		if (str_is_alphanum(ft_substr(g_vars.line, 1, ft_strlen(g_vars.line))))
+		{
+			str = my_getenv(g_vars.my_env, ft_substr(g_vars.line, 1,
+					ft_strlen(g_vars.line)));
+			if (!str)
+			{
+				g_vars.exit_status = 0;
+				return (1);
+			}
+		}
 	}
 	if (g_vars.line[0] == '\0' || ft_is_space())
 	{
