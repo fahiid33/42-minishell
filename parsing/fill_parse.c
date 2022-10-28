@@ -86,9 +86,12 @@ int	fill_redir_file(t_token **tokens, t_parse **tmp)
 int	fill_cmd(t_token **tokens, t_parse **tmp)
 {
 	if ((*tokens)->next && (*tokens)->e_type == PIPE
-		&& (*tokens)->next->e_type == END)
+		&& ((*tokens)->next->e_type == END || (*tokens)->next->e_type == PIPE))
 	{
-		errors(3);
+		if((*tokens)->next->e_type == PIPE)
+			errors(258);
+		else
+			errors(3);
 		return (1);
 	}
 	*tmp = add_command(*tmp);
