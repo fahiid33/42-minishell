@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 03:50:16 by amoubare          #+#    #+#             */
-/*   Updated: 2022/10/28 14:09:50 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:49:31 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	only_enter(void)
 			if (!str)
 			{
 				g_vars.exit_status = 0;
+				free(g_vars.line);
 				return (1);
 			}
 		}

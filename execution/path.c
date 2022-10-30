@@ -3,14 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 23:36:59 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/18 04:22:39 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:45:33 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	check_cmd(t_parse *cmd)
+{
+	int		u;
+	char	*save;
+
+	u = 0;
+	save = ft_strdup(cmd->cmd);
+	if (!cmd->cmd)
+		return ;
+	if (is_upper_case(cmd->cmd))
+	{
+		u = 1;
+		cmd->cmd = ft_lowercase(cmd->cmd);
+	}
+	if (builtins_cases(cmd) && ft_strcmp(cmd->cmd, "echo") != 0 && u)
+	{
+		cmd->cmd = save;
+		return ;
+	}
+	if (!ft_strcmp(cmd->cmd, "echo") && u)
+	{
+		cmd->cmd = save;
+		return ;
+	}
+}
 
 char	*ft_strcpy(char *dest, char *src)
 {

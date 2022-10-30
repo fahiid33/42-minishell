@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 05:21:28 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:28:37 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	dup_pipes(t_parse *cmd, int in, int i, int *fd)
 
 void	pipe_redir(t_parse *cmd, int in, int index, int *fd)
 {
-	open_redir(cmd, 0);
 	dup_pipes(cmd, in, index, fd);
+	open_redir(cmd, 0);
 }
 
 int	append_trunc(t_redir *redir)

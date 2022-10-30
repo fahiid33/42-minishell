@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/27 15:50:11 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/28 15:20:49 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,24 @@ int	builtins_cases(t_parse *cmd)
 int	exec_builtins(t_parse *head, t_env **my_env)
 {
 	head->argv++;
-	if (!strcmp(head->cmd, "cd"))
+	if (!ft_strcmp(head->cmd, "cd"))
 		return (cd(head, (*my_env)));
-	else if (!strcmp(head->cmd, "env") && !head->argv[0])
+	else if (!ft_strcmp(head->cmd, "env") && !head->argv[0])
 		return (env());
-	else if (!strcmp(head->cmd, "env") && head->argv[0])
+	else if (!ft_strcmp(head->cmd, "env") && head->argv[0])
 	{
 		file_error(head->argv[0], 0);
 		return (127);
 	}	
-	else if (!strcmp(head->cmd, "export"))
+	else if (!ft_strcmp(head->cmd, "export"))
 		return (export(head));
-	else if (!strcmp(head->cmd, "pwd"))
+	else if (!ft_strcmp(head->cmd, "pwd"))
 		return (pwd());
-	else if (!strcmp(head->cmd, "exit"))
+	else if (!ft_strcmp(head->cmd, "exit"))
 		return (my_exit(head));
-	else if (!strcmp(head->cmd, "echo"))
+	else if (!ft_strcmp(head->cmd, "echo"))
 		return (echo(head));
-	else if (!strcmp(head->cmd, "unset"))
+	else if (!ft_strcmp(head->cmd, "unset"))
 		return (unset(head));
 	head->argv--;
 	return (0);

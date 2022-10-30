@@ -3,38 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 04:53:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 08:19:10 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/30 20:49:43 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	check_cmd(t_parse *cmd)
+void	wrong_cmd1(char *cmd, char *error)
 {
-	int		u;
-	char	*save;
-
-	u = 0;
-	save = ft_strdup(cmd->cmd);
-	if (!cmd->cmd)
-		return ;
-	if (is_upper_case(cmd->cmd))
+	if (!ft_strcmp(cmd, "/"))
 	{
-		u = 1;
-		cmd->cmd = ft_lowercase(cmd->cmd);
+		ft_putstr_fd("minishell: /: is a directory\n", 2);
+		g_vars.exit_status = 126;
 	}
-	if (builtins_cases(cmd) && ft_strcmp(cmd->cmd, "echo") != 0 && u)
+	else if (ft_int_strchr(cmd, '/') != -1)
 	{
-		cmd->cmd = save;
-		return ;
+		write(2, error, ft_strlen(error));
+		write(2, "\n", 1);
+		g_vars.exit_status = 127;
 	}
-	if (!ft_strcmp(cmd->cmd, "echo") && u)
+	else
 	{
-		cmd->cmd = save;
-		return ;
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": command not found\n", 21);
+		g_vars.exit_status = 127;
 	}
 }
 
@@ -46,18 +41,7 @@ void	wrong_cmd(char *cmd)
 	write(2, "minishell: ", ft_strlen("minishell: "));
 	if (errno == 2)
 	{
-		if (ft_int_strchr(cmd, '/') != -1)
-		{
-			write(2, error, ft_strlen(error));
-			write(2, "\n", 1);
-			g_vars.exit_status = 127;
-		}
-		else
-		{
-			write(2, cmd, ft_strlen(cmd));
-			write(2, ": command not found\n", 21);
-			g_vars.exit_status = 127;
-		}
+		wrong_cmd1(cmd, error);
 		exit(g_vars.exit_status);
 	}
 	else if (errno == 13 || errno == 21)
@@ -114,8 +98,12 @@ void	execute(t_parse *command, t_env **env)
 		g_vars.exit_status = 0;
 		exit(g_vars.exit_status);
 	}
-	if (command->cmd[0] == '/' && access(command->cmd, F_OK) != 0)
-		wrong_cmd(command->cmd);
+	if (command->cmd[0] == '/' || (command->cmd[0] == '.'
+			&& command->cmd[1] == '/'))
+	{
+		if (access(command->cmd, F_OK) != 0)
+			wrong_cmd(command->cmd);
+	}
 	if (execve(path, command->argv, new_env) == -1)
 		wrong_cmd(command->cmd);
 }

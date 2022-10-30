@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:29:30 by aainhaja          #+#    #+#             */
-/*   Updated: 2022/10/27 02:26:10 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/30 21:12:33 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	str_is_alnum(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!is_alphanum(str[i]))
+		if (!is_alphanum(str[i]) && str[i] != '_')
 			return (0);
 		i++;
 	}

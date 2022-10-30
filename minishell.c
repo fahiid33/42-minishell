@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:45:32 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 14:33:11 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/31 00:17:44 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_gs_and_c_signal(void)
 	c_signal();
 }
 
-void	mino(t_parse *cmds)
+void	mini(t_parse *cmds)
 {
 	if (!g_vars.g_err)
 	{
@@ -61,7 +61,7 @@ int	main(int ac, char *av[], char **env)
 		tokens = parsing(tokens);
 		fill_tparse(tokens, &commands);
 		add_history(g_vars.line);
-		mino(commands);
+		mini(commands);
 		free(g_vars.line);
 	}
 }

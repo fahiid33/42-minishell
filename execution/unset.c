@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:07 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/27 02:22:33 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/10/30 20:25:59 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,12 @@ void	del_env_key(char *key, t_env **env)
 int	unset(t_parse *cmd)
 {
 	int		i;
-	t_env	*env;
 
 	i = 0;
-	env = g_vars.my_env;
 	while (cmd->argv[i])
 	{
 		if (check_arg(cmd->argv[i]))
-			del_env_key(cmd->argv[i], &env);
+			del_env_key(cmd->argv[i], &g_vars.my_env);
 		else
 		{
 			g_vars.exit_status = 1;

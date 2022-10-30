@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 03:00:20 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/28 14:01:50 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/10/31 00:19:11 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig_helper(void)
 	{
 		ft_putchar_fd('\n', 0);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		g_vars.exit_status = 1;
 	}
@@ -53,9 +53,8 @@ void	main_sig(int sig)
 
 void	sig_handler(int sig)
 {
-	if (!kill(g_vars.pid, sig))
+	if (ft_strcmp(g_vars.line, "./minishell") != 0 && !kill(g_vars.pid, sig))
 	{
-		g_vars.pid = 0;
 		if (sig == SIGQUIT)
 		{
 			ft_putstr_fd("Quit: 3\n", 1);
@@ -67,6 +66,8 @@ void	sig_handler(int sig)
 			g_vars.exit_status = 130;
 		}
 	}
+	else if (ft_strcmp(g_vars.line, "./minishell") == 0)
+		g_vars.pid = 0;
 	else if (g_vars.pid != 0)
 		main_sig(sig);
 }
