@@ -6,13 +6,13 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 01:52:02 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/27 03:20:56 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:10:44 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	dup_files(int exe, int fin, int fout)
+void	dup_files(int fin, int fout)
 {
 	if (!g_vars.g_err)
 	{

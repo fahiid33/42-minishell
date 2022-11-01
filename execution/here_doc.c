@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 02:29:19 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/24 02:48:10 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/11/01 22:10:32 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	open_heredoc(char *limiter, char *filename)
 {
 	int		fd;
 	char	*doc;
-	int		*seq;
 
 	fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, 0644);
 	while (1)

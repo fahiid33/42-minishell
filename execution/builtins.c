@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 23:24:17 by fstitou           #+#    #+#             */
-/*   Updated: 2022/10/28 15:20:49 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:12:23 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	builtins_cases(t_parse *cmd)
 	return (0);
 }
 
-int	exec_builtins(t_parse *head, t_env **my_env)
+int	exec_builtins(t_parse *head)
 {
 	head->argv++;
 	if (!ft_strcmp(head->cmd, "cd"))
-		return (cd(head, (*my_env)));
+		return (cd(head));
 	else if (!ft_strcmp(head->cmd, "env") && !head->argv[0])
 		return (env());
 	else if (!ft_strcmp(head->cmd, "env") && head->argv[0])

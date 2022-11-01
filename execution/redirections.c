@@ -6,7 +6,7 @@
 /*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 18:45:13 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/30 20:28:37 by fstitou          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:11:18 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,5 @@ void	open_redir(t_parse *head, int exe)
 		}
 		tmp = tmp->next;
 	}
-	dup_files(exe, fin, fout);
+	dup_files(fin, fout);
 }

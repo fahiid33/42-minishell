@@ -26,7 +26,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME):
-	@$(CC) $(CPPFLAGS) $(SRC) $(LDFLAGS) $(CPPFLAGS) -lreadline  -o $(NAME)
+	@$(CC) $(CPPFLAGS) $(SRC) $(CFLAGS) $(LDFLAGS) $(CPPFLAGS) -lreadline  -o $(NAME) $(SANITIZE)
 	@echo "👍👍👍"
 
 clean :

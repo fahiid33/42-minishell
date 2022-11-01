@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 14:17:35 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/11/01 22:12:37 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ char	**ft_split(char const *s, char c);
 void	free_unused(int frr, char *s1, char *s2);
 int		is_upper_case(char *str);
 char	*ft_upper_case(char *str);
-void	dup_files(int exe, int fin, int fout);
+void	dup_files(int fin, int fout);
 void	file_error(char *filename, int am);
 char	*ft_strjoino(char *s1, char *s2, int frr);
 void	join_string2(char *str, char *s2, int j);
@@ -213,7 +213,7 @@ int		str_is_alnum(char *str);
 void	*f_malloc(size_t size);
 char	*join_3_str(char *s1, char *s2, char *s3);
 int		ft_int_strchr(const char *s, int c);
-int		exec_builtins(t_parse *commands, t_env **my_env);
+int		exec_builtins(t_parse *commands);
 void	exec_pipeline(t_parse *commands, t_env **env);
 char	**ft_split(char const *s, char c);
 int		pwd(void);
@@ -226,7 +226,7 @@ char	*get_path(char *cmd, char **env);
 void	execute(t_parse *command, t_env **env);
 int		check_exp_arg(char *to_check);
 int		builtins_cases(t_parse *cmd);
-int		cd(t_parse *head, t_env *my_env);
+int		cd(t_parse *head);
 void	lst_add_backenv(t_env **lst, t_env *new);
 int		export(t_parse *head);
 void	check_numb(char *str);

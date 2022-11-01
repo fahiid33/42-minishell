@@ -17,7 +17,7 @@ void	exec_child(t_parse *head, t_env **env)
 	if (head->cmd && builtins_cases(head))
 	{
 		if (!g_vars.g_err)
-			g_vars.exit_status = exec_builtins(head, env);
+			g_vars.exit_status = exec_builtins(head);
 		exit (g_vars.exit_status);
 	}
 	else
@@ -55,7 +55,7 @@ void	__child(t_parse *cmd, t_env **env)
 	}
 }
 
-void	exec_simple_cmd(t_parse *cmd, t_env **env)
+void	exec_simple_cmd(t_parse *cmd)
 {
 	int	fds[2];
 
@@ -63,7 +63,7 @@ void	exec_simple_cmd(t_parse *cmd, t_env **env)
 	fds[1] = dup(1);
 	open_redir(cmd, 1);
 	if (!g_vars.g_err)
-		g_vars.exit_status = exec_builtins(cmd, env);
+		g_vars.exit_status = exec_builtins(cmd);
 	dup2(fds[0], 0);
 	dup2(fds[1], 1);
 }
@@ -90,7 +90,7 @@ void	exec_pipeline(t_parse *commands, t_env **env)
 	{
 		if (simple_cmd(head))
 		{
-			exec_simple_cmd(head, env);
+			exec_simple_cmd(head);
 			return ;
 		}
 	}

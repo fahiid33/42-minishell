@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amoubare <amoubare@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fstitou <fstitou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 02:32:47 by fahd              #+#    #+#             */
-/*   Updated: 2022/10/28 14:09:15 by amoubare         ###   ########.fr       */
+/*   Updated: 2022/11/01 22:10:14 by fstitou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	cd_tilde(t_parse *head)
 	return (g_vars.exit_status);
 }
 
-int	cd(t_parse *head, t_env *env)
+int	cd(t_parse *head)
 {
 	char	*pwd;
 	char	*cwd;
