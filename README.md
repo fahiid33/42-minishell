@@ -16,7 +16,7 @@ rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME
 
 sudo apt install readline 
 
-some helping sources:
+some helping resources:
 
 https://www.rozmichelle.com/pipes-forks-dups/
 
